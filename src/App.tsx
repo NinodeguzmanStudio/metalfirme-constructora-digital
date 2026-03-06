@@ -452,7 +452,7 @@ function HeroSection(){
   return(
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",background:T.bgBase}}>
       {/* ── FOTO DE FONDO SOLDADURA — primer elemento, todo lo demás va encima ── */}
-      <img src="https://wrzammhherzgdxtrfhmk.supabase.co/storage/v1/object/public/ravichagua/Gemini_Generated_Image_n4d47qn4d47qn4d4.jfif" alt="" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.55,pointerEvents:"none",userSelect:"none",zIndex:0}}/>
+      <img src="https://wrzammhherzgdxtrfhmk.supabase.co/storage/v1/object/public/ravichagua/Gemini_Generated_Image_n4d47qn4d47qn4d4.jfif" alt="" style={{position:"absolute",top:"13%",left:0,right:0,height:"18%",width:"100%",objectFit:"cover",opacity:.22,pointerEvents:"none",userSelect:"none",zIndex:0,clipPath:"inset(0 0 0 0)"}}/>
 
       {/* Overlay oscuro MUY ligero — solo para legibilidad del texto */}
       <div style={{position:"absolute",inset:0,background:`rgba(10,18,34,.55)`,pointerEvents:"none",zIndex:1}}/>
