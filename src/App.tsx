@@ -452,7 +452,7 @@ function HeroSection(){
   return(
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",position:"relative",overflow:"hidden",background:T.bgBase}}>
       {/* ── FOTO DE FONDO SOLDADURA — primer elemento, todo lo demás va encima ── */}
-      <img src="https://wrzammhherzgdxtrfhmk.supabase.co/storage/v1/object/public/ravichagua/Gemini_Generated_Image_n4d47qn4d47qn4d4.jfif" alt="" style={{position:"absolute",top:"13%",left:0,right:0,height:"18%",width:"100%",objectFit:"cover",opacity:.22,pointerEvents:"none",userSelect:"none",zIndex:0,clipPath:"inset(0 0 0 0)"}}/>
+      <img src="https://wrzammhherzgdxtrfhmk.supabase.co/storage/v1/object/public/ravichagua/Gemini_Generated_Image_n4d47qn4d47qn4d4.jfif" alt="" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.55,pointerEvents:"none",userSelect:"none",zIndex:0}}/>
 
       {/* Overlay oscuro MUY ligero — solo para legibilidad del texto */}
       <div style={{position:"absolute",inset:0,background:`rgba(10,18,34,.55)`,pointerEvents:"none",zIndex:1}}/>
@@ -476,7 +476,7 @@ function HeroSection(){
             <div style={{height:1,flex:1,background:`linear-gradient(90deg,${T.blue},${T.blue}05)`}}/>
           </div>
 
-          <h1 style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:mob?"clamp(48px,13vw,72px)":"clamp(56px,6.5vw,104px)",lineHeight:1,margin:0}}>
+          <h1 style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:mob?"clamp(48px,13vw,72px)":"clamp(56px,6.5vw,104px)",lineHeight:1.15,margin:0}}>
             <div style={{display:"block",marginBottom:6}}>
               {w1.map((w,i)=>(
                 <span key={w+i} style={{display:"inline-block",marginRight:"0.16em",...chrome,opacity:phase>i?1:0,transform:phase>i?"translateY(0)":"translateY(60px)",transition:`all .5s cubic-bezier(.22,1,.36,1) ${i*.04}s`}}>{w}</span>
@@ -528,7 +528,7 @@ function HeroSection(){
             ))}
             </div>
             <div style={{display:"flex",flexWrap:"wrap",gap:8,marginTop:mob?16:28}}>
-              {["MIG/TIG","Inox","Carbono","Aluminio"].map(c=>(
+              {["Entregas a tiempo","Envíos a todo el Perú"].map(c=>(
                 <span key={c} style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:2,color:T.muted,border:`1px solid ${T.border}`,borderRadius:3,padding:"4px 10px",textTransform:"uppercase"}}>{c}</span>
               ))}
             </div>
@@ -618,7 +618,7 @@ function SvcCard({s,expanded,toggle}){
    3 materials, bg tint shifts
 ═══════════════════════════════════ */
 const MATERIALS=[
-  {id:"carbono", label:"Acero al carbono", tint:"rgba(50,70,90,.25)",  accent:"#6a9ab8", desc:"El más versátil y económico. Ideal para estructuras, muebles y elementos decorativos. Alta resistencia mecánica, fácil de soldar y pintar.", props:["Alta resistencia","Fácil soldadura","Pintura electrostática","Económico"]},
+  {id:"carbono", label:"Acero al carbono", tint:"rgba(50,70,90,.25)",  accent:"#6a9ab8", desc:"El más versátil y económico. Ideal para estructuras, muebles y elementos decorativos. Alta resistencia mecánica, fácil de soldar y pintar.", props:["Alta resistencia","Fácil soldadura","Económico","Versátil"]},
   {id:"inox",    label:"Acero inoxidable", tint:"rgba(80,110,130,.3)", accent:"#8cc4d8", desc:"Resistencia a la corrosión y aspecto premium. Perfecto para barras, cocinas industriales y ambientes húmedos. Acabado brushed o pulido.", props:["Anticorrosión","Acabado pulido","Apto alimentario","Alta durabilidad"]},
   {id:"alum",    label:"Aluminio",          tint:"rgba(40,80,120,.2)", accent:"#5a90c0", desc:"Ligero y resistente a la vez. Ideal para fachadas, estructuras en altura y proyectos donde el peso es crítico. Anodizado o en bruto.", props:["Liviano","Anticorrosión natural","Anodizado","Estructuras en altura"]},
 ];
@@ -750,13 +750,11 @@ function ProcessSection(){
 /* ═══════════════════════════════════
    GALLERY
 ═══════════════════════════════════ */
-const cats=["Todos","Mesas","Barras","Estructuras","Puertas","Escaleras"];
+const cats=["Todos","Mesas","Barras","Estructuras"];
 const projs=[
   {id:1,title:"Mesa comedor industrial",cat:"Mesas",      g:`150deg,#151008,${T.bgBase}`},
   {id:2,title:"Barra para restaurante", cat:"Barras",     g:`150deg,#0c1826,${T.bgBase}`},
   {id:3,title:"Entrepiso comercial",    cat:"Estructuras",g:`150deg,#101a28,${T.bgBase}`},
-  {id:4,title:"Portón corredizo",       cat:"Puertas",    g:`150deg,#141218,${T.bgBase}`},
-  {id:5,title:"Escalera tipo U",        cat:"Escaleras",  g:`150deg,#180e08,${T.bgBase}`},
   {id:6,title:"Reja ornamental",        cat:"Estructuras",g:`150deg,#0c1830,${T.bgBase}`},
   {id:7,title:"Mesa de centro",         cat:"Mesas",      g:`150deg,#081c20,${T.bgBase}`},
   {id:8,title:"Barra cervecera",        cat:"Barras",     g:`150deg,#161008,${T.bgBase}`},
