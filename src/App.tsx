@@ -37,6 +37,8 @@ const electric = { background:`linear-gradient(135deg,${T.blueHi} 0%,${T.blue} 5
 ═══════════════════════════════════ */
 let _sid=0;
 function WeldingCursor() {
+  const isTouch=typeof window!=="undefined"&&("ontouchstart" in window||navigator.maxTouchPoints>0);
+  if(isTouch) return null;
   const dot   = useRef(null);
   const halo  = useRef(null);
   const sparks= useRef([]);
@@ -299,29 +301,38 @@ function DiagDivider({flip=false}){
 /* ═══════════════════════════════════
    COUNTING NUMBER
 ═══════════════════════════════════ */
-function CountUp({target,suffix="",duration=1600}){
+function CountUp({target,suffix="",duration=1600,trigger=false}){
   const [val,setVal]=useState(0);
   const started=useRef(false);
   const ref=useRef(null);
+
+  const start=useCallback(()=>{
+    if(started.current) return;
+    started.current=true;
+    const t0=performance.now();
+    const num=parseInt(target);
+    const tick=now=>{
+      const p=Math.min((now-t0)/duration,1);
+      const e=1-Math.pow(1-p,3);
+      setVal(Math.floor(e*num));
+      if(p<1) requestAnimationFrame(tick);
+      else setVal(num);
+    };
+    requestAnimationFrame(tick);
+  },[target,duration]);
+
+  // Trigger from parent (mobile)
+  useEffect(()=>{ if(trigger) start(); },[trigger]);
+
+  // IntersectionObserver (desktop)
   useEffect(()=>{
     const obs=new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting && !started.current){
-        started.current=true;
-        const start=performance.now();
-        const num=parseInt(target);
-        const tick=now=>{
-          const p=Math.min((now-start)/duration,1);
-          const e=1-Math.pow(1-p,3);
-          setVal(Math.floor(e*num));
-          if(p<1) requestAnimationFrame(tick);
-          else setVal(num);
-        };
-        requestAnimationFrame(tick);
-      }
-    },{threshold:.5});
+      if(entries[0].isIntersecting) start();
+    },{threshold:.3,rootMargin:"0px 0px -50px 0px"});
     if(ref.current) obs.observe(ref.current);
     return()=>obs.disconnect();
   },[]);
+
   return <span ref={ref}>{val}{suffix}</span>;
 }
 
@@ -357,18 +368,44 @@ function Nav({active,setActive}){
   );
   if(mob) return(
     <>
+      <style>{`
+        @keyframes slideIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes menuFade{from{opacity:0}to{opacity:1}}
+      `}</style>
       <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:`${T.bgBase}f8`,backdropFilter:"blur(20px)",borderBottom:`1px solid ${T.border}`,padding:"0 20px",display:"flex",alignItems:"center",justifyContent:"space-between",height:56}}>
         <Logo/>
-        <button onClick={()=>setOpen(o=>!o)} style={{background:"none",border:`1px solid ${T.border}`,borderRadius:5,padding:"6px 10px",cursor:"pointer",display:"flex",flexDirection:"column",gap:4}}>
-          {[0,1,2].map(i=><div key={i} style={{width:20,height:1.5,background:T.muted}}/>)}
+        {/* Hamburger — animado a X cuando abierto */}
+        <button onClick={()=>setOpen(o=>!o)} style={{background:"none",border:`1px solid ${open?T.blue:T.border}`,borderRadius:6,padding:"8px 10px",cursor:"pointer",display:"flex",flexDirection:"column",gap:4,transition:"border-color .2s"}}>
+          <div style={{width:20,height:1.5,background:open?T.blue:T.muted,transform:open?"rotate(45deg) translate(4px,4px)":"none",transition:"all .25s",transformOrigin:"center"}}/>
+          <div style={{width:20,height:1.5,background:open?T.blue:T.muted,opacity:open?0:1,transition:"all .25s"}}/>
+          <div style={{width:20,height:1.5,background:open?T.blue:T.muted,transform:open?"rotate(-45deg) translate(4px,-4px)":"none",transition:"all .25s",transformOrigin:"center"}}/>
         </button>
       </nav>
       {open&&(
-        <div style={{position:"fixed",top:56,left:0,right:0,zIndex:99,background:`${T.bgBase}fc`,backdropFilter:"blur(20px)",borderBottom:`1px solid ${T.border}`,padding:"16px 20px 20px",display:"flex",flexDirection:"column",gap:2}}>
-          {NAVLINKS.map(l=>(
-            <button key={l} onClick={()=>{setActive(l);setOpen(false);}} style={{background:"none",border:"none",fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:15,letterSpacing:2.5,color:active===l?T.blue:T.muted,cursor:"pointer",textTransform:"uppercase",textAlign:"left",padding:"10px 4px",borderBottom:`1px solid ${T.border}22`}}>{l}</button>
-          ))}
-          <button style={{marginTop:12,background:`linear-gradient(135deg,${T.blue},${T.blueDim})`,color:"#fff",border:"none",borderRadius:5,padding:"12px",fontSize:12,fontWeight:800,cursor:"pointer",fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,textTransform:"uppercase"}}>Cotizar</button>
+        <div style={{position:"fixed",top:56,left:0,right:0,zIndex:99,background:`${T.bgBase}fd`,backdropFilter:"blur(24px)",borderBottom:`1px solid ${T.borderHi}`,animation:"menuFade .2s ease"}}>
+          {/* Línea decorativa azul arriba */}
+          <div style={{height:1,background:`linear-gradient(90deg,transparent,${T.blue}60,transparent)`}}/>
+          <div style={{padding:"8px 0 16px"}}>
+            {NAVLINKS.map((l,i)=>(
+              <button key={l} onClick={()=>{setActive(l);setOpen(false);}}
+                style={{width:"100%",background:"none",border:"none",display:"flex",alignItems:"center",justifyContent:"space-between",padding:"13px 24px",cursor:"pointer",animation:`slideIn .25s ease ${i*0.05}s both`,borderBottom:`1px solid ${T.border}18`}}>
+                <div style={{display:"flex",alignItems:"center",gap:12}}>
+                  {/* Indicador activo */}
+                  <div style={{width:3,height:16,borderRadius:2,background:active===l?T.blue:"transparent",transition:"background .2s"}}/>
+                  <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:20,letterSpacing:3,color:active===l?T.blue:T.muted,textTransform:"uppercase",transition:"color .2s"}}>{l}</span>
+                </div>
+                <span style={{color:active===l?T.blue:T.border,fontSize:14,transition:"color .2s"}}>›</span>
+              </button>
+            ))}
+            {/* CTA WhatsApp */}
+            <div style={{padding:"16px 24px 8px"}}>
+              <a href="https://wa.me/51916207911?text=Hola%2C%20quiero%20cotizar%20un%20trabajo%20en%20Estructuras%20Ravichagua" target="_blank" rel="noopener noreferrer"
+                style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,background:`linear-gradient(135deg,${T.blue},${T.blueDim})`,color:"#fff",borderRadius:8,padding:"14px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,textTransform:"uppercase",textDecoration:"none",boxShadow:`0 0 20px ${T.blue}40`,animation:`slideIn .25s ease ${NAVLINKS.length*0.05+0.05}s both`}}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.126 1.532 5.862L.057 23.535a.75.75 0 00.916.919l5.765-1.506A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.702-.5-5.254-1.375l-.372-.214-3.892 1.018 1.001-3.797-.228-.381A9.938 9.938 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                Cotizar por WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </>
@@ -510,27 +547,28 @@ function HeroSection(){
           </div>
         </div>
 
-        {/* RIGHT — glass panel (hidden on mobile unless lineDone) */}
+        {/* RIGHT — glass panel */}
         {(!mob||lineDone)&&(
         <div style={{opacity:lineDone?1:0,transform:lineDone?"translateX(0)":"translateX(40px)",transition:"all .7s .6s"}}>
           <div style={{background:`linear-gradient(145deg,${T.bgCard}cc,${T.bgMid}cc)`,border:`1px solid ${T.borderHi}`,borderRadius:14,padding:mob?20:32,backdropFilter:"blur(12px)",position:"relative",overflow:"hidden"}}>
             <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${T.blue}60,transparent)`}}/>
             <div style={{position:"absolute",top:0,left:"20%",width:"60%",height:"40%",background:`radial-gradient(ellipse,${T.blue}08 0%,transparent 70%)`,pointerEvents:"none"}}/>
             <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:4,color:T.muted,textTransform:"uppercase",marginBottom:mob?16:28}}>Resultados</div>
-            <div style={{display:mob?"flex":"block",gap:mob?16:0,justifyContent:mob?"space-between":"flex-start"}}>
-            {[{v:"500",s:"+",l:"Proyectos entregados"},{v:"10",s:"+",l:"Años de experiencia"},{v:"100",s:"%",l:"Trabajos a medida"}].map((st,i)=>(
-              <div key={st.l} style={{marginBottom:mob?0:i<2?24:0,flex:mob?"1":undefined}}>
-                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:mob?36:56,lineHeight:1,...electric}}>
-                  <CountUp target={st.v} suffix={st.s} duration={1800}/>
+            {/* En móvil: 3 columnas lado a lado */}
+            <div style={{display:"grid",gridTemplateColumns:mob?"1fr 1fr 1fr":"1fr",gap:mob?8:0}}>
+            {[{v:"500",s:"+",l:"Proyectos"},{v:"10",s:"+",l:"Años exp."},{v:"100",s:"%",l:"A medida"}].map((st,i)=>(
+              <div key={st.l} style={{marginBottom:mob?0:i<2?24:0,textAlign:mob?"center":"left"}}>
+                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:mob?32:56,lineHeight:1,...electric}}>
+                  <CountUp target={st.v} suffix={st.s} duration={1800} trigger={lineDone}/>
                 </div>
-                <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:mob?11:13,color:T.body,letterSpacing:.5}}>{st.l}</div>
+                <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:mob?11:13,color:T.body,letterSpacing:.5,lineHeight:1.3}}>{st.l}</div>
                 {!mob&&i<2&&<div style={{height:1,background:T.border,marginTop:20}}/>}
               </div>
             ))}
             </div>
-            <div style={{display:"flex",flexWrap:"wrap",gap:8,marginTop:mob?16:28}}>
+            <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:mob?14:28}}>
               {["Entregas a tiempo","Envíos a todo el Perú"].map(c=>(
-                <span key={c} style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:2,color:T.muted,border:`1px solid ${T.border}`,borderRadius:3,padding:"4px 10px",textTransform:"uppercase"}}>{c}</span>
+                <span key={c} style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:1.5,color:T.muted,border:`1px solid ${T.border}`,borderRadius:3,padding:"4px 10px",textTransform:"uppercase"}}>{c}</span>
               ))}
             </div>
           </div>
@@ -905,28 +943,46 @@ const SECTIONS={
 
 export default function App(){
   const [active,setActive]=useState("Inicio");
+  const mob=useIsMobile();
+  const waUrl="https://wa.me/51916207911?text=Hola%2C%20quiero%20cotizar%20un%20trabajo%20en%20Estructuras%20Ravichagua";
+  const WaIcon=()=>(
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.126 1.532 5.862L.057 23.535a.75.75 0 00.916.919l5.765-1.506A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.702-.5-5.254-1.375l-.372-.214-3.892 1.018 1.001-3.797-.228-.381A9.938 9.938 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+    </svg>
+  );
   return(
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
-        *{box-sizing:border-box;margin:0;padding:0;cursor:none!important;}
+        *{box-sizing:border-box;margin:0;padding:0;}
         body{background:${T.bgBase};color:#c0d4e8;-webkit-font-smoothing:antialiased;}
+        @media(pointer:fine){*{cursor:none!important;}}
         ::-webkit-scrollbar{width:4px;}
         ::-webkit-scrollbar-track{background:${T.bgBase};}
         ::-webkit-scrollbar-thumb{background:${T.border};border-radius:2px;}
         ::-webkit-scrollbar-thumb:hover{background:${T.borderHi};}
-        @keyframes waPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}50%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}
+        @keyframes waPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 0 0 10px rgba(37,211,102,0)}}
+        @keyframes slideIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes menuFade{from{opacity:0}to{opacity:1}}
       `}</style>
       <WeldingCursor/>
-      {/* WhatsApp flotante */}
-      <a href="https://wa.me/51916207911?text=Hola,%20quiero%20consultar%20sobre%20un%20trabajo%20en%20Estructuras%20Ravichagua" target="_blank" rel="noopener noreferrer"
-        style={{position:"fixed",bottom:24,right:24,zIndex:9990,width:56,height:56,borderRadius:"50%",background:"#25d366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(0,0,0,.35)",animation:"waPulse 2s infinite",cursor:"pointer",textDecoration:"none"}}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.126 1.532 5.862L.057 23.535a.75.75 0 00.916.919l5.765-1.506A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.702-.5-5.254-1.375l-.372-.214-3.892 1.018 1.001-3.797-.228-.381A9.938 9.938 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-        </svg>
-      </a>
-      <div style={{background:T.bgBase,minHeight:"100vh"}}>
+      {/* DESKTOP — botón flotante redondo */}
+      {!mob&&(
+        <a href={waUrl} target="_blank" rel="noopener noreferrer"
+          style={{position:"fixed",bottom:28,right:28,zIndex:9990,width:52,height:52,borderRadius:"50%",background:"#25d366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(0,0,0,.4)",animation:"waPulse 2.5s infinite",textDecoration:"none"}}>
+          <WaIcon/>
+        </a>
+      )}
+      {/* MÓVIL — barra fija abajo */}
+      {mob&&(
+        <a href={waUrl} target="_blank" rel="noopener noreferrer"
+          style={{position:"fixed",bottom:0,left:0,right:0,zIndex:9990,background:"#25d366",display:"flex",alignItems:"center",justifyContent:"center",gap:10,padding:"14px",textDecoration:"none",boxShadow:"0 -2px 20px rgba(37,211,102,.3)"}}>
+          <WaIcon/>
+          <span style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:800,fontSize:14,letterSpacing:2,color:"white",textTransform:"uppercase"}}>Cotizar por WhatsApp</span>
+        </a>
+      )}
+      <div style={{background:T.bgBase,minHeight:"100vh",paddingBottom:mob?56:0}}>
         <Nav active={active} setActive={setActive}/>
         <div style={{paddingTop:56}}>{SECTIONS[active]}</div>
         <Footer/>
