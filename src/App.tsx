@@ -456,11 +456,12 @@ function HeroSection(){
 
       {/* Overlay oscuro MUY ligero — solo para legibilidad del texto */}
       <div style={{position:"absolute",inset:0,background:`rgba(10,18,34,.55)`,pointerEvents:"none",zIndex:1}}/>
+      {/* Verde metalizado esquina superior izquierda */}
+      <div style={{position:"absolute",top:0,left:0,width:"55%",height:"55%",background:"radial-gradient(ellipse at 0% 0%,rgba(30,100,55,.45) 0%,rgba(20,70,38,.2) 35%,transparent 70%)",pointerEvents:"none",zIndex:2}}/>
+      {/* Verde metalizado esquina inferior derecha */}
+      <div style={{position:"absolute",bottom:0,right:0,width:"55%",height:"55%",background:"radial-gradient(ellipse at 100% 100%,rgba(30,100,55,.45) 0%,rgba(20,70,38,.2) 35%,transparent 70%)",pointerEvents:"none",zIndex:2}}/>
       {/* Grid blueprint sutil */}
       <div style={{position:"absolute",inset:0,backgroundImage:`linear-gradient(${T.border}22 1px,transparent 1px),linear-gradient(90deg,${T.border}22 1px,transparent 1px)`,backgroundSize:"88px 88px",pointerEvents:"none",zIndex:2}}/>
-      {/* Esquinas verdes */}
-      <div style={{position:"absolute",top:0,left:0,width:"55%",height:"55%",background:"radial-gradient(ellipse at 0% 0%,rgba(40,90,60,.18) 0%,transparent 70%)",pointerEvents:"none",zIndex:2}}/>
-      <div style={{position:"absolute",bottom:0,right:0,width:"55%",height:"55%",background:"radial-gradient(ellipse at 100% 100%,rgba(40,90,60,.18) 0%,transparent 70%)",pointerEvents:"none",zIndex:2}}/>
       {!mob&&<div style={{position:"absolute",right:"-2%",top:"50%",transform:"translateY(-50%)",fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:"38vw",lineHeight:1,color:"transparent",WebkitTextStroke:`1px ${T.border}`,opacity:.08,pointerEvents:"none",userSelect:"none"}}>10</div>}
       {[[28,28],[28,"calc(100% - 28px)"],["calc(100% - 28px)",28],["calc(100% - 28px)","calc(100% - 28px)"]].map(([tp,lf],i)=>(
         <div key={i} style={{position:"absolute",top:tp,left:lf,width:6,height:6,borderRadius:"50%",background:`radial-gradient(circle at 35% 35%,${T.muted},${T.bgCard})`,boxShadow:"inset 0 1px 2px rgba(0,0,0,.9),0 1px 1px rgba(255,255,255,.05)"}}/>
@@ -887,8 +888,17 @@ export default function App(){
         ::-webkit-scrollbar-track{background:${T.bgBase};}
         ::-webkit-scrollbar-thumb{background:${T.border};border-radius:2px;}
         ::-webkit-scrollbar-thumb:hover{background:${T.borderHi};}
+        @keyframes waPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}50%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}
       `}</style>
       <WeldingCursor/>
+      {/* WhatsApp flotante */}
+      <a href="https://wa.me/51999999999?text=Hola,%20quiero%20cotizar%20un%20trabajo" target="_blank" rel="noopener noreferrer"
+        style={{position:"fixed",bottom:24,right:24,zIndex:9990,width:56,height:56,borderRadius:"50%",background:"#25d366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(0,0,0,.35)",animation:"waPulse 2s infinite",cursor:"pointer",textDecoration:"none"}}>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.126 1.532 5.862L.057 23.535a.75.75 0 00.916.919l5.765-1.506A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.702-.5-5.254-1.375l-.372-.214-3.892 1.018 1.001-3.797-.228-.381A9.938 9.938 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+      </a>
       <div style={{background:T.bgBase,minHeight:"100vh"}}>
         <Nav active={active} setActive={setActive}/>
         <div style={{paddingTop:56}}>{SECTIONS[active]}</div>
