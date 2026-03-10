@@ -473,7 +473,7 @@ function SectionTitleSpark({line1,accent,sub}){
 /* ═══════════════════════════════════
    HERO  — split layout + bg numbers + counters
 ═══════════════════════════════════ */
-function HeroSection(){
+function HeroSection({onVerProyectos}){
   const mob=useIsMobile();
   const [phase,setPhase]=useState(0);
   const [lineDone,setLineDone]=useState(false);
@@ -543,7 +543,7 @@ function HeroSection(){
 
           <div style={{display:"flex",gap:12,flexWrap:"wrap",opacity:lineDone?1:0,transition:"all .5s .45s"}}>
             <HeroBtn primary label="Cotizar por WhatsApp"/>
-            <HeroBtn label="Ver proyectos →"/>
+            <HeroBtn label="Ver proyectos →" onClick={onVerProyectos}/>
           </div>
         </div>
 
@@ -590,7 +590,7 @@ function CornerBracket({style,flip}){
   );
 }
 
-function HeroBtn({label,primary}){
+function HeroBtn({label,primary,onClick}){
   const [h,setH]=useState(false);
   const waUrl="https://wa.me/51916207911?text=Hola%2C%20quiero%20cotizar%20un%20trabajo%20en%20Estructuras%20Ravichagua";
   if(primary) return(
@@ -601,8 +601,8 @@ function HeroBtn({label,primary}){
     </a>
   );
   return(
-    <button onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{position:"relative",overflow:"hidden",background:"transparent",color:T.muted,border:`1px solid ${T.borderHi}`,borderRadius:5,padding:"13px 28px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,cursor:"none",transform:h?"scale(1.04)":"scale(1)",transition:"transform .2s",textTransform:"uppercase"}}>
+    <button onClick={onClick} onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
+      style={{position:"relative",overflow:"hidden",background:"transparent",color:T.muted,border:`1px solid ${T.borderHi}`,borderRadius:5,padding:"13px 28px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,cursor:"pointer",transform:h?"scale(1.04)":"scale(1)",transition:"transform .2s",textTransform:"uppercase"}}>
       <span style={{position:"relative",zIndex:1}}>{label}</span>
     </button>
   );
@@ -932,19 +932,19 @@ function Footer(){
 /* ═══════════════════════════════════
    APP
 ═══════════════════════════════════ */
-const SECTIONS={
-  Inicio:      <HeroSection/>,
-  Servicios:   <ServicesSection/>,
-  Materiales:  <MaterialsSection/>,
-  Proceso:     <ProcessSection/>,
-  Proyectos:   <GallerySection/>,
-  Testimonios: <TestimonialsSection/>,
-};
 
 export default function App(){
   const [active,setActive]=useState("Inicio");
   const mob=useIsMobile();
   const waUrl="https://wa.me/51916207911?text=Hola%2C%20quiero%20cotizar%20un%20trabajo%20en%20Estructuras%20Ravichagua";
+  const SECTIONS={
+    Inicio:      <HeroSection onVerProyectos={()=>setActive("Proyectos")}/>,
+    Servicios:   <ServicesSection/>,
+    Materiales:  <MaterialsSection/>,
+    Proceso:     <ProcessSection/>,
+    Proyectos:   <GallerySection/>,
+    Testimonios: <TestimonialsSection/>,
+  };
   const WaIcon=()=>(
     <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
