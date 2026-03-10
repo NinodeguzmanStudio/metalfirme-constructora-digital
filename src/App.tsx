@@ -554,10 +554,17 @@ function CornerBracket({style,flip}){
 
 function HeroBtn({label,primary}){
   const [h,setH]=useState(false);
+  const waUrl="https://wa.me/51916207911?text=Hola%2C%20quiero%20cotizar%20un%20trabajo%20en%20Estructuras%20Ravichagua";
+  if(primary) return(
+    <a href={waUrl} target="_blank" rel="noopener noreferrer" onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
+      style={{position:"relative",overflow:"hidden",background:`linear-gradient(135deg,${T.blue},${T.blueDim})`,color:"#fff",border:"none",borderRadius:5,padding:"13px 28px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,cursor:"pointer",transform:h?"scale(1.04)":"scale(1)",transition:"transform .2s",boxShadow:h?`0 0 26px ${T.blue}60`:`0 0 14px ${T.blueDim}50`,textTransform:"uppercase",textDecoration:"none",display:"inline-block"}}>
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)",transform:`translateX(${h?"200%":"-100%"}) skewX(-12deg)`,transition:"transform .5s"}}/>
+      <span style={{position:"relative",zIndex:1}}>{label}</span>
+    </a>
+  );
   return(
     <button onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}
-      style={{position:"relative",overflow:"hidden",background:primary?`linear-gradient(135deg,${T.blue},${T.blueDim})`:"transparent",color:primary?"#fff":T.muted,border:primary?"none":`1px solid ${T.borderHi}`,borderRadius:5,padding:"13px 28px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,cursor:"none",transform:h?"scale(1.04)":"scale(1)",transition:"transform .2s",boxShadow:primary&&h?`0 0 26px ${T.blue}60`:primary?`0 0 14px ${T.blueDim}50`:"none",textTransform:"uppercase"}}>
-      {primary&&<div style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)",transform:`translateX(${h?"200%":"-100%"}) skewX(-12deg)`,transition:"transform .5s"}}/>}
+      style={{position:"relative",overflow:"hidden",background:"transparent",color:T.muted,border:`1px solid ${T.borderHi}`,borderRadius:5,padding:"13px 28px",fontSize:13,fontWeight:800,fontFamily:"'Rajdhani',sans-serif",letterSpacing:2,cursor:"none",transform:h?"scale(1.04)":"scale(1)",transition:"transform .2s",textTransform:"uppercase"}}>
       <span style={{position:"relative",zIndex:1}}>{label}</span>
     </button>
   );
@@ -803,9 +810,9 @@ function ProjCard({p}){
    TESTIMONIALS
 ═══════════════════════════════════ */
 const tesis=[
-  {name:"Carlos M.", district:"Miraflores",project:"Mesa de comedor",   text:"Excelente calidad y acabado. La mesa quedó perfecta, exactamente como la pedimos."},
-  {name:"Ana R.",    district:"San Borja",  project:"Entrepiso metálico",text:"Cumplieron con el plazo y el presupuesto. El entrepiso quedó sólido y bien terminado."},
-  {name:"Roberto L.",district:"La Molina",  project:"Reja perimetral",   text:"Diseño moderno y elegante. Los vecinos me preguntan quién lo hizo."},
+  {name:"Cliente satisfecho", district:"Lima",project:"Trabajo metálico",text:"Próximamente compartiremos los testimonios reales de nuestros clientes. ¡Contáctanos y sé el primero en dejar tu reseña!"},
+  {name:"Cliente satisfecho", district:"Lima",project:"Trabajo metálico",text:"Más de 500 proyectos entregados en Lima y provincias. La satisfacción de nuestros clientes es nuestra mayor recompensa."},
+  {name:"Cliente satisfecho", district:"Lima",project:"Trabajo metálico",text:"Fabricación a medida con acabados profesionales. Cumplimos plazos y presupuestos acordados."},
 ];
 
 function TestimonialsSection(){
@@ -847,19 +854,39 @@ function TestiCard({t}){
 function Footer(){
   const mob=useIsMobile();
   return(
-    <footer style={{borderTop:`1px solid ${T.border}`,padding:mob?"20px":"30px 52px",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:12,background:`${T.bgBase}cc`,paddingLeft:mob?20:52,paddingRight:mob?20:52}}>
-      <div style={{display:"flex",alignItems:"center",gap:10}}>
-        <div style={{width:2,height:20,background:`linear-gradient(180deg,${T.blueHi},${T.blueDim})`,borderRadius:2}}/>
-        <div style={{display:"flex",flexDirection:"column",lineHeight:1}}>
-          <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:16,letterSpacing:4,...chrome}}>ESTRUCTURAS</span>
-          <div style={{display:"flex",justifyContent:"flex-end"}}>
-            <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:600,fontSize:9,letterSpacing:6,color:T.blue,marginTop:1}}>RAVICHAGUA</span>
+    <footer style={{borderTop:`1px solid ${T.border}`,padding:mob?"24px 20px":"36px 52px",background:`${T.bgBase}cc`}}>
+      <div style={{maxWidth:1120,margin:"0 auto",display:"flex",flexWrap:"wrap",gap:32,justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <div style={{width:2,height:28,background:`linear-gradient(180deg,${T.blueHi},${T.blueDim})`,borderRadius:2}}/>
+          <div style={{display:"flex",flexDirection:"column",alignItems:"stretch",lineHeight:1}}>
+            <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:18,letterSpacing:4,...chrome}}>ESTRUCTURAS</span>
+            <div style={{display:"flex",justifyContent:"flex-end"}}>
+              <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:600,fontSize:9,letterSpacing:6,color:T.blue,marginTop:1}}>RAVICHAGUA</span>
+            </div>
           </div>
         </div>
+        <div style={{display:"flex",flexDirection:mob?"column":"row",gap:mob?16:48}}>
+          <div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:3,color:T.blue,textTransform:"uppercase",marginBottom:6}}>Oficina Central</div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:13,color:T.body,lineHeight:1.6}}>Calle Luis Aldana 251</div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:13,color:T.body,lineHeight:1.6}}>La Victoria, Lima</div>
+          </div>
+          <div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:10,letterSpacing:3,color:T.blue,textTransform:"uppercase",marginBottom:6}}>Planta de Producción</div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:13,color:T.body,lineHeight:1.6}}>Jr. Angamos Mz B Lt 09</div>
+            <div style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:500,fontSize:13,color:T.body,lineHeight:1.6}}>AAHH Miguel Grau, SJL — Lima</div>
+          </div>
+        </div>
+        <div style={{width:"100%",borderTop:`1px solid ${T.border}22`,paddingTop:16,marginTop:4,display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+          <p style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:600,fontSize:10,letterSpacing:2,color:T.border,textTransform:"uppercase",margin:0}}>
+            © {new Date().getFullYear()} Estructuras Ravichagua · Lima · Perú
+          </p>
+          <a href="https://wa.me/51916207911" target="_blank" rel="noopener noreferrer" style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:11,letterSpacing:2,color:T.blue,textDecoration:"none",display:"flex",alignItems:"center",gap:6}}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.126 1.532 5.862L.057 23.535a.75.75 0 00.916.919l5.765-1.506A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.702-.5-5.254-1.375l-.372-.214-3.892 1.018 1.001-3.797-.228-.381A9.938 9.938 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            +51 916 207 911
+          </a>
+        </div>
       </div>
-      <p style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:600,fontSize:9,letterSpacing:2,color:T.border,textTransform:"uppercase",margin:0}}>
-        © {new Date().getFullYear()} Estructuras Ravichagua · Lima · Perú
-      </p>
     </footer>
   );
 }
@@ -892,7 +919,7 @@ export default function App(){
       `}</style>
       <WeldingCursor/>
       {/* WhatsApp flotante */}
-      <a href="https://wa.me/51999999999?text=Hola,%20quiero%20cotizar%20un%20trabajo" target="_blank" rel="noopener noreferrer"
+      <a href="https://wa.me/51916207911?text=Hola,%20quiero%20consultar%20sobre%20un%20trabajo%20en%20Estructuras%20Ravichagua" target="_blank" rel="noopener noreferrer"
         style={{position:"fixed",bottom:24,right:24,zIndex:9990,width:56,height:56,borderRadius:"50%",background:"#25d366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(0,0,0,.35)",animation:"waPulse 2s infinite",cursor:"pointer",textDecoration:"none"}}>
         <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
