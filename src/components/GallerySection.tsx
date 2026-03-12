@@ -45,7 +45,7 @@ function CardA({ p, idx, onClick }) {
         }} />
       )}
       {/* overlay solo abajo para texto */}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 45%, transparent 100%)" }} />
       {/* tinte hover */}
       {p.image && <div style={{ position: "absolute", inset: 0, background: "rgba(50,100,220,0.12)", opacity: hovered ? 1 : 0, transition: "opacity 0.4s" }} />}
 
@@ -89,7 +89,7 @@ function CardB({ p, idx, onClick }) {
           onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
         />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 45%, transparent 100%)" }} />
 
       <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6eb3ff", border: "1px solid rgba(100,160,255,0.25)" }}>
         {p.cat}
@@ -180,7 +180,7 @@ function SimpleLightbox({ project, onClose }) {
           ? <img src={project.image} alt={project.title} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", display: "block" }} />
           : <div style={{ width: "100%", aspectRatio: "16/9", background: "linear-gradient(135deg,#1e3a5f,#0d1b2a)" }} />
         }
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)" }} />
         <button onClick={onClose} style={{ position: "absolute", top: 12, right: 12, width: 34, height: 34, borderRadius: 8, background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 14, cursor: "pointer" }}>✕</button>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 24px 24px" }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: "#6eb3ff", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 4 }}>{project.cat}</div>
