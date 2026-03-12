@@ -45,17 +45,16 @@ function CardA({ p, idx, onClick }) {
         }} />
       )}
       {/* overlay solo abajo para texto */}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 45%, transparent 100%)" }} />
       {/* tinte hover */}
-      {p.image && <div style={{ position: "absolute", inset: 0, background: "rgba(50,100,220,0.12)", opacity: hovered ? 1 : 0, transition: "opacity 0.4s" }} />}
+      {p.image && <div style={{ position: "absolute", inset: 0, background: "rgba(50,100,220,0.08)", opacity: hovered ? 1 : 0, transition: "opacity 0.4s" }} />}
 
       <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6eb3ff", border: "1px solid rgba(100,160,255,0.25)" }}>
         {p.cat}
       </div>
 
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px" }}>
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px", background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)" }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{p.title}</div>
-        <div style={{ fontSize: 11, color: "#8ab4d8", opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(4px)", transition: "all 0.3s" }}>{p.desc}</div>
+        <div style={{ fontSize: 11, color: "#acd4f5", opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(4px)", transition: "all 0.3s" }}>{p.desc}</div>
       </div>
 
       <div style={{ position: "absolute", top: 10, right: 10, width: 26, height: 26, borderRadius: 7, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(0.6)", transition: "all 0.3s" }}>
@@ -89,7 +88,7 @@ function CardB({ p, idx, onClick }) {
           onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
         />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 45%, transparent 100%)" }} />
+      {p.image && <div style={{ position: "absolute", inset: 0, background: "rgba(50,100,220,0.08)", opacity: 0 }} />
 
       <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6eb3ff", border: "1px solid rgba(100,160,255,0.25)" }}>
         {p.cat}
@@ -101,9 +100,9 @@ function CardB({ p, idx, onClick }) {
         </div>
       )}
 
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px" }}>
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px", background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)" }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{p.title}</div>
-        <div style={{ fontSize: 11, color: "#8ab4d8" }}>{p.desc}</div>
+        <div style={{ fontSize: 11, color: "#acd4f5" }}>{p.desc}</div>
       </div>
     </div>
   );
