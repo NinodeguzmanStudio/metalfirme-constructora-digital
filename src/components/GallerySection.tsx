@@ -1,281 +1,246 @@
-// ─────────────────────────────────────────────────────────────
-//  OPCIÓN A — Hover / dedo: zoom suave en la tarjeta misma
-//  Click: abre lightbox con info + botón WhatsApp (sin zoom)
-//  Archivo a reemplazar: src/components/GallerySection.tsx
-// ─────────────────────────────────────────────────────────────
+import { useState, useRef, useCallback } from "react";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const WHATSAPP_NUMBER = "51999999999";
-
-const categories = ["Todos", "Mesas", "Barras", "Estructuras", "Puertas", "Escaleras", "Rejas"];
+const IMG = "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/mesacomedorinsutrial.png";
 
 const projects = [
-  {
-    id: 1,
-    title: "Mesa de comedor industrial",
-    cat: "Mesas",
-    desc: "Acero + madera recuperada",
-    image: "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/mesacomedorinsutrial.png",
-    color: "from-blue-900/30 via-slate-800/40 to-slate-900/60",
-  },
-  {
-    id: 2,
-    title: "Barra para restaurante",
-    cat: "Barras",
-    desc: "Acero inoxidable brushed",
-    image: "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/mesacomedorinsutrial.png",
-    color: "from-slate-700/30 via-zinc-800/40 to-slate-900/60",
-  },
-  { id: 3,  title: "Entrepiso comercial",      cat: "Estructuras", desc: "Estructura 120m² con escalera",   color: "from-cyan-900/20 via-slate-800/40 to-zinc-900/60"    },
-  { id: 4,  title: "Portón corredizo",          cat: "Puertas",     desc: "Diseño minimalista con motor",    color: "from-slate-800/30 via-blue-900/30 to-slate-900/60"   },
-  { id: 5,  title: "Escalera tipo U",           cat: "Escaleras",   desc: "Metal + peldaños de roble",       color: "from-indigo-900/20 via-slate-800/40 to-zinc-900/60"  },
-  { id: 6,  title: "Reja ornamental",           cat: "Rejas",       desc: "Estilo moderno geométrico",       color: "from-slate-700/30 via-blue-900/20 to-slate-900/60"   },
-  { id: 7,  title: "Mesa de centro flotante",   cat: "Mesas",       desc: "Patas hairpin, vidrio templado",  color: "from-cyan-900/20 via-slate-800/40 to-zinc-900/60"    },
-  { id: 8,  title: "Barra cervecera",           cat: "Barras",      desc: "Con reposapiés y riel",           color: "from-blue-900/20 via-slate-800/40 to-zinc-900/60"    },
-  { id: 9,  title: "Techo metálico",            cat: "Estructuras", desc: "Cobertura para estacionamiento",  color: "from-slate-700/30 via-zinc-800/40 to-slate-900/60"   },
-  { id: 10, title: "Puerta pivotante",          cat: "Puertas",     desc: "Acero corten + vidrio",           color: "from-indigo-900/20 via-blue-900/20 to-slate-900/60"  },
-  { id: 11, title: "Escalera caracol",          cat: "Escaleras",   desc: "Espacio reducido, diseño elegante", color: "from-slate-800/30 via-cyan-900/20 to-zinc-900/60"  },
-  { id: 12, title: "Baranda de balcón",         cat: "Rejas",       desc: "Cable de acero + tubo cuadrado",  color: "from-blue-900/20 via-slate-800/40 to-zinc-900/60"    },
+  { id: 1, title: "Mesa de comedor industrial", cat: "Mesas",       desc: "Acero + madera recuperada",        image: IMG },
+  { id: 2, title: "Barra para restaurante",     cat: "Barras",      desc: "Acero inoxidable brushed",         image: IMG },
+  { id: 3, title: "Entrepiso comercial",         cat: "Estructuras", desc: "Estructura 120m² con escalera",    image: null },
+  { id: 4, title: "Portón corredizo",            cat: "Puertas",     desc: "Diseño minimalista con motor",     image: null },
+  { id: 5, title: "Escalera tipo U",             cat: "Escaleras",   desc: "Metal + peldaños de roble",        image: null },
+  { id: 6, title: "Reja ornamental",             cat: "Rejas",       desc: "Estilo moderno geométrico",        image: null },
 ];
 
-// ── Tarjeta con foto + hover zoom ──────────────────────────────────────────
-const PhotoCard = ({
-  p,
-  onClick,
-}: {
-  p: (typeof projects)[0];
-  onClick: () => void;
-}) => {
-  const [hovered, setHovered] = useState(false);
+const gradients = [
+  "linear-gradient(135deg,#1e3a5f,#0d1b2a)",
+  "linear-gradient(135deg,#1a2a1a,#0d1b0d)",
+  "linear-gradient(135deg,#0a1a2e,#16213e)",
+  "linear-gradient(135deg,#2d1b4e,#0f0a1e)",
+  "linear-gradient(135deg,#1a1a2e,#16213e)",
+  "linear-gradient(135deg,#1e1e2e,#2d2d44)",
+];
 
+// ── OPCIÓN A: Hover zoom en tarjeta ──────────────────────────────────────────
+function CardA({ p, idx, onClick }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.85 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.85 }}
-      transition={{ duration: 0.4 }}
-      className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer border border-border/30 hover:border-primary/40 transition-colors duration-300"
-      style={{ background: "#0d1117" }}
+    <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setHovered(false)}
       onClick={onClick}
+      style={{
+        position: "relative", aspectRatio: "1/1", borderRadius: 16,
+        overflow: "hidden", cursor: "pointer",
+        background: gradients[idx % gradients.length],
+        border: hovered ? "1px solid rgba(100,160,255,0.5)" : "1px solid rgba(100,160,255,0.15)",
+        transition: "border-color 0.3s, transform 0.3s",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+      }}
     >
-      {/* Foto con zoom */}
-      <img
-        src={p.image}
-        alt={p.title}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
+      {p.image && (
+        <img src={p.image} alt={p.title} draggable={false} style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
           transition: "transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94)",
           transform: hovered ? "scale(1.12)" : "scale(1)",
-        }}
-      />
+        }} />
+      )}
+      {/* overlay solo abajo para texto */}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
+      {/* tinte hover */}
+      {p.image && <div style={{ position: "absolute", inset: 0, background: "rgba(50,100,220,0.12)", opacity: hovered ? 1 : 0, transition: "opacity 0.4s" }} />}
 
-      {/* Gradiente base */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
-
-      {/* Tinte azul al hover */}
-      <div
-        className="absolute inset-0 bg-primary/10"
-        style={{ opacity: hovered ? 1 : 0, transition: "opacity 0.4s" }}
-      />
-
-      {/* Badge categoría */}
-      <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-background/40 backdrop-blur-sm border border-primary/20 text-[10px] font-bold tracking-widest uppercase text-primary">
+      <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6eb3ff", border: "1px solid rgba(100,160,255,0.25)" }}>
         {p.cat}
       </div>
 
-      {/* Ícono expandir */}
-      <div
-        className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-background/40 backdrop-blur-sm flex items-center justify-center"
-        style={{
-          opacity: hovered ? 1 : 0,
-          transform: hovered ? "scale(1)" : "scale(0.7)",
-          transition: "all 0.3s",
-        }}
-      >
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-foreground">
-          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-        </svg>
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px" }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{p.title}</div>
+        <div style={{ fontSize: 11, color: "#8ab4d8", opacity: hovered ? 1 : 0, transform: hovered ? "translateY(0)" : "translateY(4px)", transition: "all 0.3s" }}>{p.desc}</div>
       </div>
 
-      {/* Texto abajo */}
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <span className="text-[10px] text-primary font-bold uppercase tracking-wider block mb-1">{p.cat}</span>
-        <h4 className="font-display text-base md:text-lg leading-tight font-semibold text-foreground">{p.title}</h4>
-        <p
-          className="text-xs text-muted-foreground mt-1"
-          style={{
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0)" : "translateY(5px)",
-            transition: "all 0.35s",
-          }}
-        >
-          {p.desc}
-        </p>
+      <div style={{ position: "absolute", top: 10, right: 10, width: 26, height: 26, borderRadius: 7, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(0.6)", transition: "all 0.3s" }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
       </div>
-    </motion.div>
-  );
-};
-
-// ── Tarjeta con gradiente (sin foto) ───────────────────────────────────────
-const GradientCard = ({
-  p,
-  onClick,
-}: {
-  p: (typeof projects)[0];
-  onClick: () => void;
-}) => (
-  <motion.div
-    layout
-    initial={{ opacity: 0, scale: 0.85 }}
-    animate={{ opacity: 1, scale: 1 }}
-    exit={{ opacity: 0, scale: 0.85 }}
-    transition={{ duration: 0.4 }}
-    className={`relative aspect-square rounded-2xl overflow-hidden cursor-pointer group bg-gradient-to-br ${p.color} border border-border/30 hover:border-primary/30 transition-all duration-500`}
-    onClick={onClick}
-    whileHover={{ y: -5, transition: { duration: 0.3 } }}
-  >
-    <div className="absolute inset-0 flex flex-col justify-end p-5">
-      <span className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">{p.cat}</span>
-      <h4 className="font-display text-lg md:text-xl leading-tight font-semibold">{p.title}</h4>
-      <p className="text-xs text-muted-foreground mt-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-        {p.desc}
-      </p>
     </div>
-    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
-  </motion.div>
-);
+  );
+}
 
-// ── Componente principal ────────────────────────────────────────────────────
-const GallerySection = () => {
-  const [filter, setFilter] = useState("Todos");
-  const [lightbox, setLightbox] = useState<number | null>(null);
+// ── OPCIÓN B: Click → Lightbox con zoom ──────────────────────────────────────
+function CardB({ p, idx, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: "relative", aspectRatio: "1/1", borderRadius: 16,
+        overflow: "hidden", cursor: "pointer",
+        background: gradients[idx % gradients.length],
+        border: "1px solid rgba(100,160,255,0.15)",
+        transition: "transform 0.25s, border-color 0.3s",
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.borderColor = "rgba(100,160,255,0.5)"; }}
+      onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "rgba(100,160,255,0.15)"; }}
+    >
+      {p.image && (
+        <img src={p.image} alt={p.title} draggable={false} style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+          transition: "transform 0.4s",
+        }}
+          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+        />
+      )}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
 
-  const filtered = filter === "Todos" ? projects : projects.filter((p) => p.cat === filter);
-  const current = projects.find((p) => p.id === lightbox);
+      <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6eb3ff", border: "1px solid rgba(100,160,255,0.25)" }}>
+        {p.cat}
+      </div>
+
+      {p.image && (
+        <div style={{ position: "absolute", top: 10, right: 10, background: "rgba(30,80,200,0.85)", borderRadius: 7, padding: "3px 8px", fontSize: 9, fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: 4 }}>
+          🔍 Zoom
+        </div>
+      )}
+
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 14px" }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{p.title}</div>
+        <div style={{ fontSize: 11, color: "#8ab4d8" }}>{p.desc}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── Lightbox con zoom (Opción B) ─────────────────────────────────────────────
+function ZoomLightbox({ project, onClose }) {
+  const [zoom, setZoom] = useState(1);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef(null);
+  const lastPos = useRef({ x: 0, y: 0 });
+
+  const clamp = z => Math.min(Math.max(z, 1), 4);
+
+  const handleWheel = useCallback(e => {
+    e.preventDefault();
+    setZoom(z => clamp(z - e.deltaY * 0.003));
+  }, []);
+
+  const onMouseDown = e => {
+    if (zoom <= 1) return;
+    setDragging(true);
+    dragStart.current = { x: e.clientX - lastPos.current.x, y: e.clientY - lastPos.current.y };
+  };
+  const onMouseMove = e => {
+    if (!dragging) return;
+    const nx = e.clientX - dragStart.current.x;
+    const ny = e.clientY - dragStart.current.y;
+    lastPos.current = { x: nx, y: ny };
+    setPos({ x: nx, y: ny });
+  };
+  const onMouseUp = () => setDragging(false);
+  const onDblClick = () => {
+    if (zoom > 1) { setZoom(1); setPos({ x: 0, y: 0 }); lastPos.current = { x: 0, y: 0 }; }
+    else setZoom(2.5);
+  };
 
   return (
-    <section id="proyectos" className="section-padding max-w-7xl mx-auto relative">
-      <div className="absolute top-40 left-0 w-72 h-72 bg-primary/3 rounded-full blur-[120px]" />
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(5,10,20,0.97)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14 }}>
+      {/* Header */}
+      <div onClick={e => e.stopPropagation()} style={{ display: "flex", alignItems: "center", width: "min(92vw,720px)", gap: 12 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#6eb3ff", letterSpacing: "0.2em", textTransform: "uppercase" }}>{project.cat}</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#fff" }}>{project.title}</div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <button onClick={() => setZoom(z => clamp(z + 0.5))} style={{ width: 34, height: 34, borderRadius: 8, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: 17, cursor: "pointer" }}>+</button>
+          <span style={{ fontSize: 12, color: "#8ab4d8", minWidth: 38, textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <button onClick={() => { setZoom(z => clamp(z - 0.5)); if (zoom <= 1.5) { setPos({ x: 0, y: 0 }); lastPos.current = { x: 0, y: 0 }; } }} style={{ width: 34, height: 34, borderRadius: 8, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: 17, cursor: "pointer" }}>−</button>
+          <button onClick={onClose} style={{ width: 34, height: 34, borderRadius: 8, background: "rgba(255,60,60,0.2)", border: "1px solid rgba(255,60,60,0.35)", color: "#ff6b6b", fontSize: 15, cursor: "pointer" }}>✕</button>
+        </div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-16"
-      >
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Portfolio</span>
-        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">
-          Proyectos <span className="text-gradient">destacados</span>
-        </h2>
-        <p className="text-muted-foreground text-lg">Más de 500 proyectos entregados en Lima y provincias.</p>
-      </motion.div>
+      {/* Imagen */}
+      <div onClick={e => e.stopPropagation()} onWheel={handleWheel} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp} onMouseLeave={onMouseUp} onDoubleClick={onDblClick}
+        style={{ width: "min(92vw,720px)", height: "min(55vw,500px)", overflow: "hidden", borderRadius: 14, border: "1px solid rgba(100,160,255,0.2)", cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}>
+        <img src={project.image} alt={project.title} draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${zoom}) translate(${pos.x / zoom}px, ${pos.y / zoom}px)`, transition: dragging ? "none" : "transform 0.25s ease", userSelect: "none", pointerEvents: "none" }} />
+      </div>
 
-      {/* Filtros */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="flex flex-wrap justify-center gap-2 mb-12"
-      >
-        {categories.map((c) => (
-          <button
-            key={c}
-            onClick={() => setFilter(c)}
-            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
-              filter === c
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "bg-secondary/80 text-secondary-foreground hover:bg-secondary hover:text-foreground"
-            }`}
-          >
-            {c}
-          </button>
-        ))}
-      </motion.div>
-
-      {/* Grid */}
-      <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((p) =>
-            p.image ? (
-              <PhotoCard key={p.id} p={p} onClick={() => setLightbox(p.id)} />
-            ) : (
-              <GradientCard key={p.id} p={p} onClick={() => setLightbox(p.id)} />
-            )
-          )}
-        </AnimatePresence>
-      </motion.div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {current && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background/90 backdrop-blur-xl flex items-center justify-center p-4"
-            onClick={() => setLightbox(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.85, opacity: 0, y: 30 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.85, opacity: 0, y: 30 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative w-full max-w-2xl rounded-3xl overflow-hidden border border-border/30"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Foto o gradiente en el lightbox */}
-              {current.image ? (
-                <img
-                  src={current.image}
-                  alt={current.title}
-                  className="w-full aspect-video object-cover"
-                />
-              ) : (
-                <div className={`w-full aspect-video bg-gradient-to-br ${current.color}`} />
-              )}
-
-              {/* Overlay con info */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent" />
-
-              <button
-                onClick={() => setLightbox(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-background/60 backdrop-blur-sm flex items-center justify-center hover:bg-background/80 transition-colors z-10"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                <span className="text-primary font-semibold uppercase tracking-wider text-sm">{current.cat}</span>
-                <h3 className="font-display text-3xl md:text-4xl mb-2 font-bold">{current.title}</h3>
-                <p className="text-muted-foreground mb-6">{current.desc}</p>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 w-fit rounded-xl group" asChild>
-                  <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, quiero algo similar a: ${current.title}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <MessageCircle className="mr-2 h-4 w-4" />
-                    Quiero uno similar
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+      <div onClick={e => e.stopPropagation()} style={{ fontSize: 11, color: "#3a5a7a" }}>
+        {zoom === 1 ? "Scroll o doble clic para zoom · botones + −" : "Arrastra para moverte · doble clic para resetear"}
+      </div>
+    </div>
   );
-};
+}
 
-export default GallerySection;
+// ── Lightbox modal simple (Opción A) ─────────────────────────────────────────
+function SimpleLightbox({ project, onClose }) {
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(5,10,20,0.92)", backdropFilter: "blur(18px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: "relative", width: "min(92vw,640px)", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(100,160,255,0.2)" }}>
+        {project.image
+          ? <img src={project.image} alt={project.title} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", display: "block" }} />
+          : <div style={{ width: "100%", aspectRatio: "16/9", background: "linear-gradient(135deg,#1e3a5f,#0d1b2a)" }} />
+        }
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)" }} />
+        <button onClick={onClose} style={{ position: "absolute", top: 12, right: 12, width: 34, height: 34, borderRadius: 8, background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 14, cursor: "pointer" }}>✕</button>
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 24px 24px" }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "#6eb3ff", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 4 }}>{project.cat}</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#fff", marginBottom: 4 }}>{project.title}</div>
+          <div style={{ fontSize: 13, color: "#8ab4d8", marginBottom: 16 }}>{project.desc}</div>
+          <a href={`https://wa.me/51999999999?text=Hola, quiero algo similar a: ${project.title}`} target="_blank" rel="noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#3b82f6", color: "#fff", padding: "10px 18px", borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
+            💬 Quiero uno similar →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── DEMO PRINCIPAL ────────────────────────────────────────────────────────────
+export default function GalleryDemo() {
+  const [estilo, setEstilo] = useState("A");
+  const [lightbox, setLightbox] = useState(null);
+  const current = projects.find(p => p.id === lightbox);
+
+  return (
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#060d18 0%,#0a1628 100%)", padding: "28px 20px", fontFamily: "system-ui,sans-serif", color: "#fff" }}>
+      <div style={{ maxWidth: 700, margin: "0 auto" }}>
+
+        {/* Toggle */}
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#6eb3ff", letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 10 }}>Elige el estilo</div>
+          <div style={{ display: "inline-flex", background: "rgba(255,255,255,0.06)", borderRadius: 12, padding: 4, gap: 4, border: "1px solid rgba(255,255,255,0.1)" }}>
+            <button onClick={() => setEstilo("A")} style={{ padding: "8px 24px", borderRadius: 9, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, transition: "all 0.25s", background: estilo === "A" ? "#3b82f6" : "transparent", color: estilo === "A" ? "#fff" : "#6b8aaa" }}>
+              A — Hover zoom
+            </button>
+            <button onClick={() => setEstilo("B")} style={{ padding: "8px 24px", borderRadius: 9, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, transition: "all 0.25s", background: estilo === "B" ? "#3b82f6" : "transparent", color: estilo === "B" ? "#fff" : "#6b8aaa" }}>
+              B — Click + Zoom real
+            </button>
+          </div>
+          <div style={{ fontSize: 11, color: "#3a5a7a", marginTop: 8 }}>
+            {estilo === "A" ? "Pasa el mouse sobre la tarjeta · Click abre modal" : "Click en la tarjeta con foto para ver el zoom completo"}
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+          {projects.map((p, i) =>
+            estilo === "A"
+              ? <CardA key={p.id} p={p} idx={i} onClick={() => setLightbox(p.id)} />
+              : <CardB key={p.id} p={p} idx={i} onClick={() => p.image ? setLightbox(p.id) : null} />
+          )}
+        </div>
+
+        <div style={{ marginTop: 20, background: "rgba(30,50,80,0.35)", border: "1px solid rgba(100,160,255,0.12)", borderRadius: 12, padding: "14px 18px", fontSize: 12, color: "#5a7a9a" }}>
+          {estilo === "A"
+            ? "✦ Opción A — El zoom ocurre dentro de la tarjeta al pasar el mouse. Click abre un modal con foto grande + botón WhatsApp."
+            : "✦ Opción B — Click en la foto abre pantalla completa. Scroll = zoom, arrastra para moverte, doble clic = resetear, botones + / −."}
+        </div>
+      </div>
+
+      {/* Lightboxes */}
+      {current && estilo === "A" && <SimpleLightbox project={current} onClose={() => setLightbox(null)} />}
+      {current && estilo === "B" && current.image && <ZoomLightbox project={current} onClose={() => setLightbox(null)} />}
+    </div>
+  );
+}
