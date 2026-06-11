@@ -2,17 +2,15 @@ import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [
-  { name: "Carlos M.", district: "Miraflores", project: "Mesa de comedor", text: "Excelente calidad y acabado. La mesa quedó perfecta, exactamente como la pedimos. Muy profesionales." },
-  { name: "Ana R.", district: "San Borja", project: "Entrepiso metálico", text: "Cumplieron con el plazo y el presupuesto. El entrepiso quedó sólido y bien terminado. 100% recomendados." },
-  { name: "Roberto L.", district: "La Molina", project: "Reja perimetral", text: "Diseño moderno y elegante. Los vecinos me preguntan quién lo hizo. MetalFirme es de confianza." },
-  { name: "María T.", district: "Surco", project: "Escalera tipo U", text: "Nos ayudaron con el diseño y quedó espectacular. La combinación de metal y madera es increíble." },
-  { name: "Jorge P.", district: "Barranco", project: "Barra para bar", text: "Hicieron exactamente lo que necesitaba para mi negocio. Rápidos, puntuales y con buen precio." },
+  { name: "Cliente comercial", district: "Lima", project: "Barra para restaurante", text: "Trabajo firme, buen acabado y medidas claras desde el inicio. La barra quedo lista para uso diario." },
+  { name: "Cliente residencial", district: "Lima", project: "Mesa industrial", text: "La estructura quedo solida y con presencia. Nos ayudaron a aterrizar la idea y el acabado." },
+  { name: "Cliente de negocio", district: "Lima", project: "Entrepiso comercial", text: "La propuesta fue directa y funcional. Ganamos espacio util sin complicar la operacion." },
 ];
 
 const TestimonialsSection = () => {
   return (
     <section className="section-padding max-w-7xl mx-auto relative">
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/3 rounded-full blur-[150px]" />
+      <div className="absolute left-1/2 top-20 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}

@@ -12,7 +12,7 @@ const materials = [
 const MaterialsSection = () => {
   return (
     <section className="section-padding max-w-7xl mx-auto relative">
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/3 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-0 h-px w-1/3 bg-gradient-to-l from-primary/20 to-transparent" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}

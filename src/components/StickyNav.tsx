@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { MessageCircle, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { SITE, whatsappUrl } from "@/lib/site";
 
-const WHATSAPP_NUMBER = "51999999999";
 const links = [
   { label: "Servicios", href: "#servicios" },
   { label: "Proyectos", href: "#proyectos" },
@@ -46,8 +46,8 @@ const StickyNav = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="font-display text-2xl text-primary tracking-wider font-bold relative group">
-          METALFIRME
+        <a href="#" className="font-display text-xl md:text-2xl text-primary tracking-wide font-bold relative group">
+          ESTRUCTURAS RAVICHAGUA
           <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
         </a>
 
@@ -77,7 +77,7 @@ const StickyNav = () => {
             );
           })}
           <Button size="sm" className="ml-4 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg group" asChild>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola MetalFirme")}`} target="_blank" rel="noopener noreferrer">
+            <a href={whatsappUrl(`Hola ${SITE.name}, quiero informacion para cotizar.`)} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="mr-1.5 h-4 w-4" /> WhatsApp
               <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
             </a>
@@ -120,7 +120,7 @@ const StickyNav = () => {
                 transition={{ delay: 0.3 }}
               >
                 <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4 py-6 rounded-xl" asChild>
-                  <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+                  <a href={whatsappUrl(`Hola ${SITE.name}, quiero cotizar un proyecto.`)} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="mr-2 h-4 w-4" /> Cotizar por WhatsApp
                   </a>
                 </Button>

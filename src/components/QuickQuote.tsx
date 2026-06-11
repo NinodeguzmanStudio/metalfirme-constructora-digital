@@ -2,9 +2,9 @@ import { useState } from "react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { SITE } from "@/lib/site";
 
-const projectTypes = ["Mesa", "Barra", "Estante", "Escalera", "Puerta", "Reja", "Estructura", "Otro"];
-const WHATSAPP_NUMBER = "51999999999";
+const projectTypes = ["Mesa industrial", "Barra", "Bares flotantes", "Entrepiso", "Reja", "Estructura", "Mueble metalico", "Otro"];
 
 const QuickQuote = () => {
   const [type, setType] = useState("");
@@ -13,9 +13,9 @@ const QuickQuote = () => {
 
   const sendToWhatsApp = () => {
     const msg = encodeURIComponent(
-      `Hola MetalFirme, quiero cotizar:\n• Proyecto: ${type || "No especificado"}\n• Medidas: ${measurements || "Por definir"}`
+      `Hola ${SITE.name}, quiero cotizar:\n- Proyecto: ${type || "No especificado"}\n- Medidas: ${measurements || "Por definir"}`
     );
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+    window.open(`https://wa.me/${SITE.whatsappNumber}?text=${msg}`, "_blank");
   };
 
   return (
@@ -46,7 +46,7 @@ const QuickQuote = () => {
           </div>
 
           <h3 className="font-display text-2xl md:text-3xl mb-8 text-center font-bold">
-            Cotización <span className="text-gradient">rápida</span>
+            Cotizacion <span className="text-gradient">rapida</span>
           </h3>
 
           <div className="grid md:grid-cols-3 gap-6">

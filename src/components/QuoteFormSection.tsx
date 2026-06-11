@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Send, CheckCircle, MessageCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { SITE } from "@/lib/site";
 
-const WHATSAPP_NUMBER = "51999999999";
-const projectTypes = ["Mesa", "Barra", "Estante", "Escalera", "Puerta", "Reja", "Estructura", "Entrepiso", "Otro"];
+const projectTypes = ["Mesa industrial", "Barra", "Bares flotantes", "Entrepiso", "Reja", "Estructura", "Mueble metalico", "Otro"];
 const budgetRanges = ["Menos de S/500", "S/500 - S/1,500", "S/1,500 - S/3,000", "S/3,000 - S/5,000", "Más de S/5,000", "No definido"];
 
 const QuoteFormSection = () => {
@@ -30,14 +30,15 @@ const QuoteFormSection = () => {
     e.preventDefault();
     if (!validate()) return;
     setSubmitted(true);
-    toast({ title: "¡Cotización enviada!", description: "Te contactaremos pronto por WhatsApp." });
+    toast({ title: "Solicitud lista", description: "Abrimos WhatsApp con la informacion de tu proyecto." });
+    sendToWhatsApp();
   };
 
   const sendToWhatsApp = () => {
     const msg = encodeURIComponent(
-      `Hola MetalFirme, solicito cotización:\n• Nombre: ${form.name}\n• Teléfono: ${form.phone}\n• Distrito: ${form.district}\n• Proyecto: ${form.projectType}\n• Medidas: ${form.measurements || "Por definir"}\n• Presupuesto: ${form.budget || "No definido"}\n• Detalles: ${form.details || "N/A"}`
+      `Hola ${SITE.name}, solicito cotizacion:\n- Nombre: ${form.name}\n- Telefono: ${form.phone}\n- Distrito: ${form.district}\n- Proyecto: ${form.projectType}\n- Medidas: ${form.measurements || "Por definir"}\n- Presupuesto: ${form.budget || "No definido"}\n- Detalles: ${form.details || "N/A"}`
     );
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+    window.open(`https://wa.me/${SITE.whatsappNumber}?text=${msg}`, "_blank");
   };
 
   const update = (field: string, value: string) => {
@@ -61,8 +62,8 @@ const QuoteFormSection = () => {
           >
             <CheckCircle className="h-20 w-20 text-primary mx-auto mb-8" />
           </motion.div>
-          <h2 className="font-display text-4xl mb-4 font-bold">¡Solicitud recibida!</h2>
-          <p className="text-muted-foreground mb-8 text-lg">Te contactaremos pronto. También puedes continuar por WhatsApp:</p>
+          <h2 className="font-display text-4xl mb-4 font-bold">Solicitud preparada</h2>
+          <p className="text-muted-foreground mb-8 text-lg">Tu mensaje ya esta listo para continuar la cotizacion por WhatsApp.</p>
           <Button onClick={sendToWhatsApp} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl glow-accent group">
             <MessageCircle className="mr-2 h-5 w-5" /> Continuar por WhatsApp
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -74,11 +75,11 @@ const QuoteFormSection = () => {
 
   return (
     <section id="cotizar" className="section-padding max-w-3xl mx-auto relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-primary/3 rounded-full blur-[120px]" />
+      <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
       <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-16 relative">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Cotización</span>
-        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">Solicita tu <span className="text-gradient">cotización</span></h2>
+        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Cotizacion</span>
+        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">Solicita tu <span className="text-gradient">cotizacion</span></h2>
         <p className="text-muted-foreground text-lg">Completa el formulario y te respondemos en menos de 24 horas.</p>
       </motion.div>
 

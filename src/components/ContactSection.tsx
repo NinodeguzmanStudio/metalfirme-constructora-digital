@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { MapPin, Clock, Truck, Phone, MessageCircle } from "lucide-react";
+import { MapPin, Clock, Truck, Phone } from "lucide-react";
+import { SITE } from "@/lib/site";
 
 const districts = [
   "Miraflores", "San Isidro", "Surco", "La Molina", "San Borja",
@@ -11,7 +12,7 @@ const districts = [
 const ContactSection = () => {
   return (
     <section id="contacto" className="section-padding max-w-7xl mx-auto relative">
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-primary/3 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 h-px w-1/3 bg-gradient-to-r from-primary/20 to-transparent" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -37,14 +38,15 @@ const ContactSection = () => {
           )},
           { icon: Truck, title: "Entregas", content: (
             <>
-              <p className="text-silver text-sm">Instalación en Lima Metropolitana incluida.</p>
-              <p className="text-silver text-sm mt-2">Envíos a provincias con embalaje reforzado vía agencia.</p>
+              <p className="text-silver text-sm">Instalacion y coordinacion en Lima Metropolitana.</p>
+              <p className="text-silver text-sm mt-2">Envios a provincias con embalaje reforzado via agencia.</p>
             </>
           )},
           { icon: Phone, title: "Contacto directo", content: (
             <>
-              <a href="tel:+51999999999" className="text-primary hover:text-primary/80 text-sm block font-medium transition-colors">+51 999 999 999</a>
-              <a href="mailto:info@metalfirme.pe" className="text-primary hover:text-primary/80 text-sm block mt-1 font-medium transition-colors">info@metalfirme.pe</a>
+              <a href={`tel:+${SITE.whatsappNumber}`} className="text-primary hover:text-primary/80 text-sm block font-medium transition-colors">{SITE.phoneDisplay}</a>
+              <a href={`mailto:${SITE.email}`} className="text-primary hover:text-primary/80 text-sm block mt-1 font-medium transition-colors">{SITE.email}</a>
+              <p className="text-muted-foreground text-xs mt-3">{SITE.workshop}</p>
             </>
           )},
         ].map((item, i) => (

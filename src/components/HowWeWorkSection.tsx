@@ -11,8 +11,7 @@ const steps = [
 const HowWeWorkSection = () => {
   return (
     <section className="section-padding max-w-7xl mx-auto relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-[150px]" />
+      <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}

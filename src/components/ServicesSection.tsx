@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Wrench, Home, DoorOpen, Fence, ArrowUpRight, ChevronDown, ChevronUp, MessageCircle, ArrowRight } from "lucide-react";
+import { Wrench, Home, Fence, ArrowUpRight, ChevronDown, ChevronUp, MessageCircle, ArrowRight, Building2, Utensils } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const WHATSAPP_NUMBER = "51999999999";
+import { SITE, whatsappUrl } from "@/lib/site";
 
 const services = [
-  { icon: Home, title: "Muebles metálicos", desc: "Mesas de comedor, barras, estantes y repisas industriales con acabados premium.", details: "Trabajamos con acero al carbono, acero inoxidable y combinaciones con madera. Cada pieza es diseñada a medida según tus especificaciones exactas." },
-  { icon: ArrowUpRight, title: "Estructuras metálicas", desc: "Entrepisos, techos, columnas y refuerzos estructurales para viviendas y negocios.", details: "Calculamos y fabricamos estructuras con certificación, soldadura MIG/TIG según requerimiento. Entrega con planos y certificado." },
-  { icon: DoorOpen, title: "Puertas y portones", desc: "Puertas enrollables, batientes, corredizas y portones automatizados.", details: "Diseños modernos o clásicos, con acabado en pintura electrostática o galvanizado. Instalación incluida en Lima Metropolitana." },
-  { icon: Fence, title: "Rejas y cerramientos", desc: "Rejas de seguridad, barandas, cercos perimétricos con diseños personalizados.", details: "Protege tu propiedad con estilo. Ofrecemos diseños minimalistas y ornamentales con acabados duraderos." },
-  { icon: Wrench, title: "Soldadura especializada", desc: "Reparaciones, refuerzos y trabajos de soldadura MIG, TIG y arco eléctrico.", details: "Servicio en taller y a domicilio. Soldamos aluminio, acero inoxidable y acero al carbono con equipos profesionales." },
-  { icon: ArrowUpRight, title: "Escaleras metálicas", desc: "Escaleras rectas, caracol, tipo U y L con barandas integradas.", details: "Diseño personalizado con combinación de materiales: metal + vidrio, metal + madera. Cálculo estructural incluido." },
+  { icon: Home, title: "Muebles industriales", desc: "Mesas de comedor, mesas de centro, repisas y piezas metalicas para hogares y oficinas.", details: "Fabricamos a medida combinando metal, madera y acabados resistentes para uso diario." },
+  { icon: Utensils, title: "Barras para restaurantes", desc: "Barras de atencion, exhibicion y mobiliario metalico para locales comerciales.", details: "Diseñamos segun flujo de atencion, medidas del ambiente y estilo del negocio." },
+  { icon: Building2, title: "Entrepisos comerciales", desc: "Estructuras para ampliar area util en tiendas, almacenes y espacios de trabajo.", details: "Evaluamos medidas, carga de uso y tipo de instalacion para una propuesta clara." },
+  { icon: Fence, title: "Rejas y cerramientos", desc: "Rejas ornamentales, barandas y cerramientos con enfoque en seguridad y presencia.", details: "Trabajamos diseños modernos, ornamentales y funcionales con acabados durables." },
+  { icon: Wrench, title: "Soldadura y reparaciones", desc: "Refuerzos, adaptaciones y trabajos metalicos puntuales en taller o instalacion.", details: "Atendemos acero al carbono, inoxidable y soluciones mixtas segun necesidad." },
+  { icon: ArrowUpRight, title: "Proyectos personalizados", desc: "Desarrollos metalicos para restaurantes, bares flotantes, viviendas y negocios.", details: "Partimos de tus medidas o referencia visual y armamos una cotizacion directa por WhatsApp." },
 ];
 
 const ServicesSection = () => {
@@ -20,8 +19,7 @@ const ServicesSection = () => {
 
   return (
     <section id="servicios" className="section-padding max-w-7xl mx-auto relative">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-primary/3 rounded-full blur-[100px]" />
+      <div className="absolute right-0 top-20 h-px w-1/3 bg-gradient-to-l from-primary/25 to-transparent" />
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -42,7 +40,7 @@ const ServicesSection = () => {
           Nuestros <span className="text-gradient">servicios</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          Soluciones metálicas completas para hogares, negocios y proyectos industriales.
+          Soluciones metalicas para hogares, restaurantes, comercios y proyectos a medida.
         </p>
       </motion.div>
 
@@ -99,7 +97,7 @@ const ServicesSection = () => {
                   </button>
                   <Button size="sm" variant="ghost" className="text-primary hover:text-primary hover:bg-primary/10 rounded-lg group/btn" asChild>
                     <a
-                      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, me interesa: ${s.title}`)}`}
+                      href={whatsappUrl(`Hola ${SITE.name}, me interesa cotizar: ${s.title}`)}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
