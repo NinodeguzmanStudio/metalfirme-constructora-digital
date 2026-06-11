@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Building2, MessageCircle, ShieldCheck, Truck } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { HERO_IMAGE, PROJECTS, SITE, whatsappUrl } from "@/lib/site";
 
@@ -70,7 +69,7 @@ const HeroSection = () => {
               className="rounded-lg border-steel/40 px-7 py-7 text-base text-foreground hover:border-primary/50 hover:bg-secondary md:text-lg"
               asChild
             >
-              <Link to="/proyectos">Ver proyectos</Link>
+              <a href="#proyectos">Ver proyectos</a>
             </Button>
           </div>
         </motion.div>
