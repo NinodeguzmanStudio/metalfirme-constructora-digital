@@ -6,6 +6,7 @@ import { SITE, whatsappUrl } from "@/lib/site";
 
 const links = [
   { label: "Servicios", href: "#servicios" },
+  { label: "Taller", href: "#taller" },
   { label: "Proyectos", href: "#proyectos" },
   { label: "Proceso", href: "#proceso" },
   { label: "Cotizar", href: "#cotizar" },
@@ -46,8 +47,9 @@ const StickyNav = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="font-display text-xl md:text-2xl text-primary tracking-wide font-bold relative group">
-          ESTRUCTURAS RAVICHAGUA
+        <a href="#" className="font-display text-primary font-bold leading-none tracking-wide relative group">
+          <span className="block text-base md:text-2xl">ESTRUCTURAS</span>
+          <span className="block text-[0.68rem] tracking-[0.24em] text-silver md:text-xs">RAVICHAGUA</span>
           <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
         </a>
 

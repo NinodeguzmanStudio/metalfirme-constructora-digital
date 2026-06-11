@@ -2,6 +2,7 @@ import StickyNav from "@/components/StickyNav";
 import HeroSection from "@/components/HeroSection";
 import QuickQuote from "@/components/QuickQuote";
 import ServicesSection from "@/components/ServicesSection";
+import WorkshopSection from "@/components/WorkshopSection";
 import GallerySection from "@/components/GallerySection";
 import BeforeAfterSection from "@/components/BeforeAfterSection";
 import HowWeWorkSection from "@/components/HowWeWorkSection";
@@ -19,6 +20,7 @@ const Index = () => {
       <HeroSection />
       <QuickQuote />
       <ServicesSection />
+      <WorkshopSection />
       <GallerySection />
       <BeforeAfterSection />
       <div id="proceso">

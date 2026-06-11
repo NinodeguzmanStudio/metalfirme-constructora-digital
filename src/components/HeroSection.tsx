@@ -1,92 +1,54 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown, MessageCircle, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Building2, MessageCircle, ShieldCheck, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HERO_IMAGE, SITE, whatsappUrl } from "@/lib/site";
-import { useRef } from "react";
+import { HERO_IMAGE, PROJECTS, SITE, whatsappUrl } from "@/lib/site";
 
 const trustItems = [
   { icon: ShieldCheck, label: "Fabricacion a medida" },
+  { icon: Building2, label: "Estructuras y mobiliario" },
   { icon: Truck, label: "Lima y provincias" },
-  { icon: Sparkles, label: "Acabados profesionales" },
 ];
 
 const HeroSection = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-
   return (
-    <section ref={ref} className="relative min-h-screen overflow-hidden bg-background">
-      <motion.div className="absolute inset-0" style={{ y }}>
-        <img
-          src={HERO_IMAGE}
-          alt="Barra metalica industrial fabricada por Estructuras Ravichagua"
-          className="h-full w-full scale-105 object-cover"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,hsl(var(--background))_0%,hsl(var(--background)/0.86)_36%,hsl(var(--background)/0.42)_70%,hsl(var(--background)/0.72)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(0deg,hsl(var(--background))_0%,transparent_42%,hsl(var(--background)/0.55)_100%)]" />
-      </motion.div>
+    <section className="relative min-h-[92vh] overflow-hidden bg-background pt-20 md:pt-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_12%,hsl(var(--primary)/0.11),transparent_30%),linear-gradient(135deg,hsl(var(--background))_0%,hsl(216_18%_9%)_48%,hsl(var(--background))_100%)]" />
+      <div className="absolute inset-0 grid-pattern opacity-20" />
 
-      <div className="absolute inset-0 grid-pattern opacity-25" />
-
-      <motion.div
-        className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 pb-20 pt-28 md:px-8"
-        style={{ opacity }}
-      >
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-7 flex items-center gap-4"
-          >
-            <span className="h-px w-14 bg-primary" />
-            <span className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
+      <div className="relative z-10 mx-auto grid min-h-[calc(92vh-5rem)] w-full max-w-7xl items-center gap-10 px-4 pb-14 pt-8 md:px-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl"
+        >
+          <div className="mb-6 flex items-center gap-4">
+            <span className="h-px w-12 bg-primary/80" />
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] text-primary md:text-sm">
               {SITE.name}
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-5xl font-bold leading-[0.94] tracking-tight md:text-7xl lg:text-[5.8rem]"
-          >
-            Infraestructura metalica y mobiliario industrial a medida
-          </motion.h1>
+          <h1 className="font-display text-[clamp(2.7rem,11vw,5.75rem)] font-bold leading-[0.96] tracking-tight">
+            Infraestructura metalica para negocios que necesitan crecer
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.32, duration: 0.7 }}
-            className="mt-8 max-w-2xl text-lg leading-relaxed text-silver md:text-xl"
-          >
-            Fabricamos mesas, barras, rejas, entrepisos y estructuras metalicas para hogares,
-            restaurantes y negocios que necesitan resistencia, presencia y buen acabado.
-          </motion.p>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-silver md:text-xl">
+            Fabricamos estructuras, barras, mesas de alta carga, rejas y mobiliario industrial
+            con medidas reales, acabado profesional y coordinacion directa por WhatsApp.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.46, duration: 0.7 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
+          <div className="mt-7 grid gap-3 sm:grid-cols-3">
             {trustItems.map(({ icon: Icon, label }) => (
-              <span key={label} className="glass-card flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-silver">
-                <Icon className="h-4 w-4 text-primary" />
-                {label}
-              </span>
+              <div key={label} className="glass-card flex min-h-14 items-center gap-3 rounded-lg px-4 py-3 text-sm text-silver">
+                <Icon className="h-4 w-4 shrink-0 text-primary" />
+                <span>{label}</span>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.62, duration: 0.7 }}
-            className="mt-11 flex flex-col gap-4 sm:flex-row"
-          >
-            <Button size="lg" className="rounded-lg bg-primary px-8 py-7 text-lg font-semibold text-primary-foreground hover:bg-primary/90" asChild>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Button size="lg" className="rounded-lg bg-primary px-7 py-7 text-base font-semibold text-primary-foreground hover:bg-primary/90 md:text-lg" asChild>
               <a href={whatsappUrl(`Hola ${SITE.name}, quiero cotizar un proyecto metalico.`)} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Cotizar por WhatsApp
@@ -96,23 +58,49 @@ const HeroSection = () => {
             <Button
               variant="outline"
               size="lg"
-              className="rounded-lg border-steel/40 px-8 py-7 text-lg text-foreground hover:border-primary/50 hover:bg-secondary"
+              className="rounded-lg border-steel/40 px-7 py-7 text-base text-foreground hover:border-primary/50 hover:bg-secondary md:text-lg"
               asChild
             >
               <a href="#proyectos">Ver proyectos</a>
             </Button>
-          </motion.div>
-        </div>
-      </motion.div>
+          </div>
+        </motion.div>
 
-      <motion.div
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-      >
-        <span className="text-xs uppercase tracking-widest text-muted-foreground">Scroll</span>
-        <ChevronDown className="h-5 w-5 text-primary/70" />
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative"
+        >
+          <div className="relative overflow-hidden rounded-lg border border-border bg-card shadow-2xl shadow-black/35">
+            <img
+              src={HERO_IMAGE}
+              alt="Estructura metalica comercial fabricada por Estructuras Ravichagua"
+              className="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,hsl(var(--background)/0.86)_100%)]" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-primary">Proyecto comercial</p>
+              <h2 className="mt-2 font-display text-2xl font-semibold md:text-4xl">Entrepisos, barras y mobiliario industrial</h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-silver md:text-base">
+                Soluciones metalicas para restaurantes, locales, talleres y espacios de alto uso.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            {PROJECTS.slice(0, 3).map((project) => (
+              <img
+                key={project.id}
+                src={project.image}
+                alt={project.title}
+                className="aspect-square rounded-lg border border-border object-cover"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
