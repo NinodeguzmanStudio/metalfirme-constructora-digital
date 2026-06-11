@@ -47,9 +47,14 @@ const StickyNav = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="font-display text-primary font-bold leading-none tracking-wide relative group">
-          <span className="block text-base md:text-2xl">ESTRUCTURAS</span>
-          <span className="block text-[0.68rem] tracking-[0.24em] text-silver md:text-xs">RAVICHAGUA</span>
+        <a href="#" className="group relative flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/40 bg-primary/10 font-display text-lg font-bold text-primary">
+            ER
+          </span>
+          <span className="font-display font-bold leading-none tracking-wide">
+            <span className="block text-base text-foreground md:text-2xl">ESTRUCTURAS</span>
+            <span className="block text-[0.68rem] tracking-[0.24em] text-primary md:text-xs">RAVICHAGUA</span>
+          </span>
           <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
         </a>
 
