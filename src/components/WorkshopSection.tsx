@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Flame, ImagePlus, PackageCheck, Paintbrush } from "lucide-react";
+import { ArrowRight, PackageCheck, Paintbrush, Flame } from "lucide-react";
 import { SITE, WORKSHOP_STEPS, whatsappUrl } from "@/lib/site";
 
 const icons = {
@@ -10,113 +9,71 @@ const icons = {
 };
 
 const WorkshopSection = () => {
-  const [active, setActive] = useState(WORKSHOP_STEPS[0].id);
-  const current = WORKSHOP_STEPS.find((step) => step.id === active) ?? WORKSHOP_STEPS[0];
-  const CurrentIcon = icons[current.id as keyof typeof icons];
-
   return (
     <section id="taller" className="section-padding mx-auto max-w-7xl">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        className="mb-9 grid gap-6 lg:grid-cols-[0.88fr_1.12fr] lg:items-end"
-      >
-        <div>
+      <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <span className="mb-4 block text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Nuestro taller
           </span>
           <h2 className="font-display text-4xl font-bold md:text-6xl">
-            Asi fabricamos
+            Asi fabricamos cada estructura
           </h2>
-        </div>
-        <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground lg:justify-self-end">
-          Esta vista queda separada por etapas para cargar tus fotos reales sin mezclar proyectos:
-          soldadura, pintura y despacho. Cuando me pases las URLs, cada pestaña tendra su propia galeria.
-        </p>
-      </motion.div>
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+            Del armado a la entrega, trabajamos con proceso claro: soldadura, pintura y despacho.
+            Esta seccion queda lista para tus fotos reales del taller cuando las subamos a URL publica.
+          </p>
+          <a
+            href={whatsappUrl(`Hola ${SITE.name}, quiero cotizar fabricacion en taller.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg border border-primary/40 px-5 py-3 font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
+          >
+            Cotizar fabricacion a medida
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </motion.div>
 
-      <div className="rounded-lg border border-border bg-card">
-        <div className="grid border-b border-border md:grid-cols-3">
-          {WORKSHOP_STEPS.map((step) => {
+        <div className="grid gap-4 md:grid-cols-3">
+          {WORKSHOP_STEPS.map((step, index) => {
             const Icon = icons[step.id as keyof typeof icons];
-            const selected = step.id === active;
             return (
-              <button
+              <motion.article
                 key={step.id}
-                type="button"
-                onClick={() => setActive(step.id)}
-                className={`flex items-center gap-3 border-b border-border px-5 py-4 text-left transition last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 ${
-                  selected ? "bg-secondary text-foreground" : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                }`}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08, duration: 0.55 }}
+                className="group overflow-hidden rounded-lg border border-border bg-card"
               >
-                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border ${selected ? "border-primary/50 text-primary" : "border-border"}`}>
-                  <Icon className="h-5 w-5" />
-                </span>
-                <span>
-                  <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                    Etapa
-                  </span>
-                  <span className="font-display text-xl font-semibold">{step.title}</span>
-                </span>
-              </button>
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={step.image}
+                    alt={`${step.title} en taller de ${SITE.name}`}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,hsl(var(--background)/0.88)_100%)]" />
+                  <div className="absolute bottom-4 left-4 flex h-11 w-11 items-center justify-center rounded-lg bg-background/80 text-primary backdrop-blur">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    0{index + 1}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-semibold">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                </div>
+              </motion.article>
             );
           })}
         </div>
-
-        <motion.div
-          key={current.id}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="grid gap-6 p-5 md:p-7 lg:grid-cols-[0.75fr_1.25fr]"
-        >
-          <div className="flex flex-col justify-between rounded-lg border border-border bg-background/45 p-5">
-            <div>
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg border border-primary/40 text-primary">
-                <CurrentIcon className="h-6 w-6" />
-              </div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Proceso en taller</p>
-              <h3 className="mt-3 font-display text-3xl font-semibold">{current.title}</h3>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{current.description}</p>
-            </div>
-            <a
-              href={whatsappUrl(`Hola ${SITE.name}, quiero cotizar un trabajo relacionado a ${current.title}.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-7 inline-flex w-fit items-center gap-2 rounded-lg border border-primary/40 px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
-            >
-              Cotizar esta etapa
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {current.photos.length > 0
-              ? current.photos.map((photo) => (
-                  <img
-                    key={photo}
-                    src={photo}
-                    alt={`${current.title} en taller de ${SITE.name}`}
-                    className="aspect-[4/3] rounded-lg border border-border object-cover"
-                    loading="lazy"
-                  />
-                ))
-              : Array.from({ length: 6 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex aspect-[4/3] flex-col items-center justify-center rounded-lg border border-dashed border-border bg-secondary/25 p-4 text-center"
-                  >
-                    <ImagePlus className="mb-3 h-6 w-6 text-primary/70" />
-                    <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                      Foto {index + 1}
-                    </span>
-                    <span className="mt-1 text-xs text-muted-foreground">URL pendiente</span>
-                  </div>
-                ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

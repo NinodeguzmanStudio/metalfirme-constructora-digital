@@ -93,19 +93,19 @@ export const WORKSHOP_STEPS = [
     id: "soldadura",
     title: "Soldadura",
     description: "Armado, punteo y cordones de soldadura segun uso, medida y carga del proyecto.",
-    photos: [],
+    image: PROJECTS[2].image,
   },
   {
     id: "pintura",
     title: "Pintura",
     description: "Preparacion de superficie, proteccion anticorrosiva y acabado final para uso diario.",
-    photos: [],
+    image: PROJECTS[3].image,
   },
   {
     id: "despacho",
     title: "Despacho",
     description: "Revision, embalaje y coordinacion para entrega o instalacion en Lima y provincias.",
-    photos: [],
+    image: PROJECTS[5].image,
   },
 ];
 

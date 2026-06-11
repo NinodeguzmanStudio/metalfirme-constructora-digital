@@ -22,19 +22,11 @@ const HeroSection = () => {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl"
         >
-          <div className="mb-8 inline-flex items-stretch overflow-hidden rounded-lg border border-border bg-card/70 shadow-xl shadow-black/20 backdrop-blur">
-            <div className="w-2 bg-primary" />
-            <div className="px-5 py-4">
-              <span className="block text-xs font-bold uppercase tracking-[0.3em] text-primary">
-                Infraestructura
-              </span>
-              <span className="mt-1 block font-display text-2xl font-bold leading-none tracking-wide text-foreground md:text-3xl">
-                Ravichagua
-              </span>
-              <span className="mt-2 block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Metalica industrial en Lima
-              </span>
-            </div>
+          <div className="mb-6 flex items-center gap-4">
+            <span className="h-px w-12 bg-primary/80" />
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] text-primary md:text-sm">
+              {SITE.name}
+            </span>
           </div>
 
           <h1 className="font-display text-[clamp(2.7rem,11vw,5.75rem)] font-bold leading-[0.96] tracking-tight">
