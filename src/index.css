@@ -15,8 +15,8 @@
     --popover: 216 22% 10%;
     --popover-foreground: 210 20% 95%;
 
-    --primary: 38 88% 54%;
-    --primary-foreground: 220 25% 8%;
+    --primary: 29 48% 46%;
+    --primary-foreground: 210 20% 98%;
 
     --secondary: 216 18% 14%;
     --secondary-foreground: 210 15% 80%;
@@ -24,15 +24,15 @@
     --muted: 216 15% 16%;
     --muted-foreground: 210 10% 50%;
 
-    --accent: 38 88% 54%;
-    --accent-foreground: 220 25% 8%;
+    --accent: 29 48% 46%;
+    --accent-foreground: 210 20% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 216 15% 18%;
     --input: 216 15% 18%;
-    --ring: 38 88% 54%;
+    --ring: 29 48% 46%;
 
     --radius: 0.75rem;
 
@@ -42,12 +42,12 @@
     --charcoal-light: 216 22% 12%;
 
     --silver: 210 8% 82%;
-    --blue-glow: 38 100% 58%;
+    --blue-glow: 29 55% 50%;
 
     --sidebar-background: 216 22% 8%;
     --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 38 88% 54%;
-    --sidebar-primary-foreground: 220 25% 8%;
+    --sidebar-primary: 29 48% 46%;
+    --sidebar-primary-foreground: 210 20% 98%;
     --sidebar-accent: 216 18% 14%;
     --sidebar-accent-foreground: 210 15% 80%;
     --sidebar-border: 216 15% 18%;
@@ -73,7 +73,7 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(38 92% 56%), hsl(42 100% 72%), hsl(24 82% 58%));
+    background-image: linear-gradient(135deg, hsl(29 48% 46%), hsl(34 34% 64%), hsl(210 13% 78%));
   }
 
   .text-gradient-silver {
@@ -91,15 +91,15 @@
     background: linear-gradient(135deg, hsl(216 22% 12% / 0.8), hsl(216 22% 8% / 0.9));
     backdrop-filter: blur(24px);
     border: 1px solid hsl(210 30% 35% / 0.3);
-    box-shadow: 0 8px 32px hsl(38 88% 54% / 0.08), 0 0 0 1px hsl(210 20% 30% / 0.1);
+    box-shadow: 0 8px 32px hsl(29 48% 46% / 0.1), 0 0 0 1px hsl(210 20% 30% / 0.1);
   }
 
   .glow-accent {
-    box-shadow: 0 0 40px -8px hsl(38 88% 54% / 0.35), 0 0 80px -16px hsl(24 90% 58% / 0.18);
+    box-shadow: 0 0 40px -8px hsl(29 48% 46% / 0.3), 0 0 80px -16px hsl(29 48% 46% / 0.14);
   }
 
   .glow-subtle {
-    box-shadow: 0 0 20px -5px hsl(38 88% 54% / 0.15);
+    box-shadow: 0 0 20px -5px hsl(29 48% 46% / 0.15);
   }
 
   .section-padding {
@@ -112,8 +112,8 @@
   }
 
   .border-glow:hover {
-    border-color: hsl(38 88% 54% / 0.5);
-    box-shadow: 0 0 20px -5px hsl(38 88% 54% / 0.2);
+    border-color: hsl(29 48% 46% / 0.5);
+    box-shadow: 0 0 20px -5px hsl(29 48% 46% / 0.2);
   }
 
   .shimmer {
@@ -153,7 +153,7 @@
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(210 80% 55% / 0.5);
+  background: hsl(29 48% 46% / 0.55);
 }
 
 /* Smooth scroll */
