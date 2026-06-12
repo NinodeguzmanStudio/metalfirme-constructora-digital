@@ -136,10 +136,7 @@ const WorkshopSection = () => {
                       loading="lazy"
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(6,10,15,0.78)_100%)]" />
-                    <span className="absolute bottom-3 left-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/80">
-                      {activeStage.title} {index + 1}
-                    </span>
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(6,10,15,0.24)_100%)] opacity-0 transition group-hover:opacity-100" />
                   </div>
                 ))
               : Array.from({ length: 3 }).map((_, index) => (

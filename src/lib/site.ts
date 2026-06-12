@@ -83,5 +83,8 @@ export const WORKSHOP_GALLERIES = {
     "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/p5.png",
     "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/p7.png",
   ],
-  despacho: [],
+  despacho: [
+    "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/a1.png",
+    "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/a2.png",
+  ],
 } as const;
