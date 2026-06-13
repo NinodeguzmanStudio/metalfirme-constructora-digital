@@ -34,6 +34,20 @@ const StickyNav = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const handleMobileNav = (href: string) => {
+    setMenuOpen(false);
+    window.setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -103,24 +117,39 @@ const StickyNav = () => {
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0, y: -20 }}
-            animate={{ opacity: 1, height: "auto", y: 0 }}
+            animate={{ opacity: 1, height: "100dvh", y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="md:hidden absolute left-0 right-0 top-full z-50 bg-background/98 backdrop-blur-xl border-b border-border overflow-hidden shadow-2xl shadow-background/60"
+            className="fixed inset-0 z-[100] md:hidden bg-background/98 backdrop-blur-xl overflow-hidden shadow-2xl shadow-background/60"
           >
-            <div className="px-4 py-6 space-y-1">
+            <div className="flex h-16 items-center justify-between border-b border-border px-4">
+              <img
+                src="/ravichagua-logo.png"
+                alt={`${SITE.legalName} logo`}
+                className="h-[42px] w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]"
+              />
+              <button
+                className="rounded-lg p-2 text-foreground hover:bg-secondary"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Cerrar menu"
+              >
+                <X className="h-7 w-7" />
+              </button>
+            </div>
+
+            <div className="px-4 py-8 space-y-2">
               {links.map((l, i) => (
-                <motion.a
+                <motion.button
                   key={l.href}
-                  href={l.href}
-                  onClick={() => setMenuOpen(false)}
+                  type="button"
+                  onClick={() => handleMobileNav(l.href)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="block text-foreground py-4 px-4 text-lg font-medium rounded-lg hover:bg-secondary transition-colors"
+                  className="block w-full rounded-lg px-4 py-4 text-left text-2xl font-medium text-foreground transition-colors hover:bg-secondary"
                 >
                   {l.label}
-                </motion.a>
+                </motion.button>
               ))}
               <motion.div
                 initial={{ opacity: 0 }}
