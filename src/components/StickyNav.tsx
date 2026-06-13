@@ -47,9 +47,12 @@ const StickyNav = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="font-display text-xl md:text-2xl text-primary tracking-wide font-bold relative group">
-          ESTRUCTURAS RAVICHAGUA
-          <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300" />
+        <a href="#" className="flex items-center">
+          <img
+            src="/ravichagua-logo.png"
+            alt={`${SITE.legalName} logo`}
+            className="h-10 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] md:h-12"
+          />
         </a>
 
         {/* Desktop links */}

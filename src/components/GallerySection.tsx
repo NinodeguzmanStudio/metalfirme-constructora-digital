@@ -53,13 +53,9 @@ const GallerySection = () => {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, index) => (
-          <motion.article
+        {projects.map((project) => (
+          <article
             key={project.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.05, duration: 0.5 }}
             className="group overflow-hidden rounded-lg border border-border/70 bg-card"
           >
             <button
@@ -68,11 +64,15 @@ const GallerySection = () => {
               className="relative block aspect-[4/3] w-full overflow-hidden text-left"
               aria-label={`Ver ${project.title}`}
             >
-              <img
+              <motion.img
                 src={project.image}
                 alt={`${project.title} fabricado por ${SITE.name}`}
                 className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 loading="lazy"
+                initial={{ scale: 1.12, y: 18 }}
+                whileInView={{ scale: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,hsl(var(--background)/0.88)_100%)]" />
               <span className="absolute left-4 top-4 rounded-md bg-background/75 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-primary backdrop-blur">
@@ -86,7 +86,7 @@ const GallerySection = () => {
                 <p className="mt-2 text-sm leading-relaxed text-silver">{project.description}</p>
               </div>
             </button>
-          </motion.article>
+          </article>
         ))}
       </div>
 

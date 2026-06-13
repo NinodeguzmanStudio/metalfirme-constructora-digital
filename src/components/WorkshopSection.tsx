@@ -130,11 +130,15 @@ const WorkshopSection = () => {
                     key={`${activeStage.id}-${index}`}
                     className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-background/40"
                   >
-                    <img
+                    <motion.img
                       src={photo}
                       alt={`${activeStage.title} en taller de ${SITE.name}`}
                       loading="lazy"
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      initial={{ scale: 1.1, y: 14 }}
+                      whileInView={{ scale: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(6,10,15,0.24)_100%)] opacity-0 transition group-hover:opacity-100" />
                   </div>

@@ -9,27 +9,20 @@ const BeforeAfterSection = () => {
   return (
     <section className="section-padding mx-auto max-w-7xl">
       <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="overflow-hidden rounded-lg border border-border bg-card"
-        >
-          <img
+        <div className="overflow-hidden rounded-lg border border-border bg-card">
+          <motion.img
             src={featured.image}
             alt={`${featured.title} de ${SITE.name}`}
             className="aspect-[4/3] w-full object-cover"
             loading="lazy"
+            initial={{ scale: 1.08 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
           />
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
+        <div>
           <span className="mb-4 block text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Proyecto destacado
           </span>
@@ -59,7 +52,7 @@ const BeforeAfterSection = () => {
             Cotizar una estructura
             <ArrowRight className="h-4 w-4" />
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
