@@ -88,7 +88,12 @@ const StickyNav = () => {
         </div>
 
         {/* Mobile menu button */}
-        <button className="md:hidden text-foreground p-2 rounded-lg hover:bg-secondary transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
+        <button
+          className="md:hidden relative z-50 text-foreground p-2 rounded-lg hover:bg-secondary transition-colors"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Cerrar menu" : "Abrir menu"}
+          aria-expanded={menuOpen}
+        >
           {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
@@ -101,7 +106,7 @@ const StickyNav = () => {
             animate={{ opacity: 1, height: "auto", y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border overflow-hidden"
+            className="md:hidden absolute left-0 right-0 top-full z-50 bg-background/98 backdrop-blur-xl border-b border-border overflow-hidden shadow-2xl shadow-background/60"
           >
             <div className="px-4 py-6 space-y-1">
               {links.map((l, i) => (
@@ -112,7 +117,7 @@ const StickyNav = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="block text-foreground py-3 px-4 text-lg font-medium rounded-lg hover:bg-secondary transition-colors"
+                  className="block text-foreground py-4 px-4 text-lg font-medium rounded-lg hover:bg-secondary transition-colors"
                 >
                   {l.label}
                 </motion.a>

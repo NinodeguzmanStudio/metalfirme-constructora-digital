@@ -52,11 +52,11 @@ const WorkshopSection = () => {
           Nuestro taller
         </span>
         <h2 className="font-display text-4xl font-bold md:text-6xl">
-          Asi fabricamos sin cargar toda la pagina
+          Fabricacion metalica con proceso controlado
         </h2>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-          Una seccion puntual para mostrar proceso por etapas. Ya cargamos las fotos reales de
-          soldadura y pintura, y dejamos despacho listo para cuando me pases esas imagenes.
+          Mostramos cada etapa clave del trabajo: soldadura, pintura y despacho, con fotos reales
+          del taller para que veas como cuidamos la estructura antes de la entrega.
         </p>
       </motion.div>
 
@@ -123,12 +123,12 @@ const WorkshopSection = () => {
             </a>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-3">
             {gallery.length > 0
               ? gallery.map((photo, index) => (
                   <div
                     key={`${activeStage.id}-${index}`}
-                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-background/40"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-background/40 sm:rounded-2xl"
                   >
                     <motion.img
                       src={photo}

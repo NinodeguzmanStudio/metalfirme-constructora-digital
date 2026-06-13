@@ -67,7 +67,7 @@ const GallerySection = () => {
               <motion.img
                 src={project.image}
                 alt={`${project.title} fabricado por ${SITE.name}`}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                className="h-full w-full object-contain transition duration-700 group-hover:scale-105 md:object-cover"
                 loading="lazy"
                 initial={{ scale: 1.12, y: 18 }}
                 whileInView={{ scale: 1, y: 0 }}

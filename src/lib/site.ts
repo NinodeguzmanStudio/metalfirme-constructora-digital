@@ -64,7 +64,8 @@ export const PROJECTS = [
   },
 ];
 
-export const HERO_IMAGE = PROJECTS[1].image;
+export const HERO_IMAGE =
+  "https://snfjdjrhlynmadrspfbt.supabase.co/storage/v1/object/public/Estructuras%20ravichagua/fondo1.png";
 
 export const WORKSHOP_GALLERIES = {
   soldadura: [
