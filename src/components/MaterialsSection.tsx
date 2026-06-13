@@ -19,16 +19,16 @@ const MaterialsSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-20"
+        className="text-center mb-6 md:mb-20"
       >
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Materiales</span>
-        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">
+        <span className="text-primary text-xs font-semibold tracking-[0.2em] uppercase mb-3 block md:mb-4 md:text-sm">Materiales</span>
+        <h2 className="font-display text-3xl md:text-6xl lg:text-7xl mb-3 font-bold md:mb-6">
           Materiales y <span className="text-gradient">acabados</span>
         </h2>
-        <p className="text-muted-foreground text-lg">Seleccionamos los mejores materiales para cada proyecto.</p>
+        <p className="text-muted-foreground text-sm md:text-lg">Seleccionamos los mejores materiales para cada proyecto.</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
         {materials.map((m, i) => (
           <motion.div
             key={m.name}
@@ -37,10 +37,10 @@ const MaterialsSection = () => {
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.6 }}
             whileHover={{ y: -5, transition: { duration: 0.3 } }}
-            className="glass-card rounded-2xl p-6 group hover:border-primary/30 transition-all duration-500 border-glow cursor-pointer"
+            className="glass-card rounded-xl p-4 group hover:border-primary/30 transition-all duration-500 border-glow cursor-pointer md:rounded-2xl md:p-6"
           >
-            <div className={`w-full h-24 rounded-xl bg-gradient-to-br ${m.swatch} mb-5 group-hover:scale-[1.03] transition-transform duration-500 border border-border/20`} />
-            <h4 className="font-display text-xl mb-2 font-semibold">{m.name}</h4>
+            <div className={`w-full h-14 rounded-lg bg-gradient-to-br ${m.swatch} mb-3 group-hover:scale-[1.03] transition-transform duration-500 border border-border/20 md:h-24 md:rounded-xl md:mb-5`} />
+            <h4 className="font-display text-base mb-1 font-semibold md:text-xl md:mb-2">{m.name}</h4>
             <p className="text-muted-foreground text-xs leading-relaxed">{m.desc}</p>
           </motion.div>
         ))}

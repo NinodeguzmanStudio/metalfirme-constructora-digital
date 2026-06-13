@@ -53,7 +53,7 @@ const StickyNav = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-[90] transition-all duration-500 ${
         scrolled
           ? "bg-background/80 backdrop-blur-xl border-b border-primary/10 shadow-lg shadow-background/50"
           : "bg-transparent"
@@ -120,7 +120,7 @@ const StickyNav = () => {
             animate={{ opacity: 1, height: "100dvh", y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed inset-0 z-[100] md:hidden bg-background/98 backdrop-blur-xl overflow-hidden shadow-2xl shadow-background/60"
+            className="fixed inset-0 z-[120] bg-background/98 shadow-2xl shadow-background/60 backdrop-blur-xl md:hidden"
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-4">
               <img
@@ -137,7 +137,7 @@ const StickyNav = () => {
               </button>
             </div>
 
-            <div className="px-4 py-8 space-y-2">
+            <div className="space-y-2 px-4 py-6">
               {links.map((l, i) => (
                 <motion.button
                   key={l.href}
@@ -146,7 +146,7 @@ const StickyNav = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="block w-full rounded-lg px-4 py-4 text-left text-2xl font-medium text-foreground transition-colors hover:bg-secondary"
+                  className="block w-full rounded-lg px-4 py-3 text-left text-xl font-medium text-foreground transition-colors hover:bg-secondary"
                 >
                   {l.label}
                 </motion.button>
@@ -156,7 +156,7 @@ const StickyNav = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4 py-6 rounded-xl" asChild>
+                <Button className="mt-4 w-full rounded-xl bg-primary py-5 text-primary-foreground hover:bg-primary/90" asChild>
                   <a href={whatsappUrl(`Hola ${SITE.name}, quiero cotizar un proyecto.`)} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="mr-2 h-4 w-4" /> Cotizar por WhatsApp
                   </a>

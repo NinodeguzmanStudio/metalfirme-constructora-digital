@@ -47,23 +47,23 @@ const QuoteFormSection = () => {
   };
 
   const inputClass = (field: string) =>
-    `w-full bg-secondary/80 border rounded-xl px-4 py-3.5 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary/50 outline-none transition-all duration-300 ${
+    `w-full bg-secondary/80 border rounded-lg px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary/50 outline-none transition-all duration-300 md:rounded-xl md:px-4 md:py-3.5 md:text-base ${
       errors[field] ? "border-destructive" : "border-border"
     }`;
 
   if (submitted) {
     return (
       <section id="cotizar" className="section-padding max-w-2xl mx-auto text-center">
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass-card-elevated rounded-3xl p-12">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="rounded-2xl p-6 glass-card-elevated md:rounded-3xl md:p-12">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring" }}
           >
-            <CheckCircle className="h-20 w-20 text-primary mx-auto mb-8" />
+            <CheckCircle className="mx-auto mb-5 h-14 w-14 text-primary md:mb-8 md:h-20 md:w-20" />
           </motion.div>
-          <h2 className="font-display text-4xl mb-4 font-bold">Solicitud preparada</h2>
-          <p className="text-muted-foreground mb-8 text-lg">Tu mensaje ya esta listo para continuar la cotizacion por WhatsApp.</p>
+          <h2 className="mb-3 font-display text-3xl font-bold md:mb-4 md:text-4xl">Solicitud preparada</h2>
+          <p className="mb-6 text-sm text-muted-foreground md:mb-8 md:text-lg">Tu mensaje ya esta listo para continuar la cotizacion por WhatsApp.</p>
           <Button onClick={sendToWhatsApp} className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl glow-accent group">
             <MessageCircle className="mr-2 h-5 w-5" /> Continuar por WhatsApp
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -77,10 +77,10 @@ const QuoteFormSection = () => {
     <section id="cotizar" className="section-padding max-w-3xl mx-auto relative">
       <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
-      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-16 relative">
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Cotizacion</span>
-        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">Solicita tu <span className="text-gradient">cotizacion</span></h2>
-        <p className="text-muted-foreground text-lg">Completa el formulario y te respondemos en menos de 24 horas.</p>
+      <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative mb-6 text-center md:mb-16">
+        <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-primary md:mb-4 md:text-sm">Cotizacion</span>
+        <h2 className="mb-2 font-display text-3xl font-bold md:mb-6 md:text-6xl lg:text-7xl">Solicita tu <span className="text-gradient">cotizacion</span></h2>
+        <p className="text-sm text-muted-foreground md:text-lg">Completa el formulario y te respondemos en menos de 24 horas.</p>
       </motion.div>
 
       <motion.form
@@ -88,29 +88,29 @@ const QuoteFormSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         onSubmit={handleSubmit}
-        className="glass-card-elevated rounded-3xl p-8 md:p-10 space-y-6 relative"
+        className="relative space-y-4 rounded-2xl p-4 glass-card-elevated md:space-y-6 md:rounded-3xl md:p-10"
       >
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-5">
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block font-medium">Nombre *</label>
+            <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Nombre *</label>
             <input value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="Tu nombre completo" className={inputClass("name")} maxLength={100} />
             {errors.name && <span className="text-destructive text-xs mt-1 block">{errors.name}</span>}
           </div>
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block font-medium">Teléfono *</label>
+            <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Teléfono *</label>
             <input value={form.phone} onChange={(e) => update("phone", e.target.value.replace(/\D/g, ""))} placeholder="999 999 999" className={inputClass("phone")} maxLength={9} />
             {errors.phone && <span className="text-destructive text-xs mt-1 block">{errors.phone}</span>}
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-5">
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block font-medium">Distrito *</label>
+            <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Distrito *</label>
             <input value={form.district} onChange={(e) => update("district", e.target.value)} placeholder="Ej: Miraflores" className={inputClass("district")} maxLength={100} />
             {errors.district && <span className="text-destructive text-xs mt-1 block">{errors.district}</span>}
           </div>
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block font-medium">Tipo de proyecto *</label>
+            <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Tipo de proyecto *</label>
             <select value={form.projectType} onChange={(e) => update("projectType", e.target.value)} className={inputClass("projectType")}>
               <option value="">Seleccionar...</option>
               {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -120,12 +120,12 @@ const QuoteFormSection = () => {
         </div>
 
         <div>
-          <label className="text-sm text-muted-foreground mb-2 block font-medium">Medidas aproximadas</label>
+          <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Medidas aproximadas</label>
           <input value={form.measurements} onChange={(e) => update("measurements", e.target.value)} placeholder="Ej: 2m largo x 1m ancho x 0.75m alto" className={inputClass("measurements")} maxLength={200} />
         </div>
 
         <div>
-          <label className="text-sm text-muted-foreground mb-2 block font-medium">Rango de presupuesto</label>
+          <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Rango de presupuesto</label>
           <select value={form.budget} onChange={(e) => update("budget", e.target.value)} className={inputClass("budget")}>
             <option value="">Seleccionar (opcional)</option>
             {budgetRanges.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -133,11 +133,11 @@ const QuoteFormSection = () => {
         </div>
 
         <div>
-          <label className="text-sm text-muted-foreground mb-2 block font-medium">Detalles adicionales</label>
+          <label className="mb-1.5 block text-xs font-medium text-muted-foreground md:mb-2 md:text-sm">Detalles adicionales</label>
           <textarea value={form.details} onChange={(e) => update("details", e.target.value)} placeholder="Describe tu proyecto, materiales preferidos, referencias..." rows={3} className={inputClass("details")} maxLength={1000} />
         </div>
 
-        <Button type="submit" size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-7 text-lg font-semibold glow-accent rounded-xl group transition-all duration-300 hover:scale-[1.01]">
+        <Button type="submit" size="lg" className="group w-full rounded-lg bg-primary py-5 text-base font-semibold text-primary-foreground transition-all duration-300 hover:scale-[1.01] hover:bg-primary/90 glow-accent md:rounded-xl md:py-7 md:text-lg">
           <Send className="mr-2 h-5 w-5" /> Enviar solicitud
           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
         </Button>

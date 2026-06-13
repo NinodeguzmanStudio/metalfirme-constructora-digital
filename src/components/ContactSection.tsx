@@ -19,15 +19,15 @@ const ContactSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-20 relative"
+        className="relative mb-6 text-center md:mb-20"
       >
-        <span className="text-primary text-sm font-semibold tracking-[0.2em] uppercase mb-4 block">Contacto</span>
-        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl mb-6 font-bold">
+        <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-primary md:mb-4 md:text-sm">Contacto</span>
+        <h2 className="mb-0 font-display text-3xl font-bold md:mb-6 md:text-6xl lg:text-7xl">
           <span className="text-gradient">Contacto</span> y cobertura
         </h2>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid gap-3 md:grid-cols-3 md:gap-5">
         {[
           { icon: Clock, title: "Horario", content: (
             <>
@@ -57,12 +57,12 @@ const ContactSection = () => {
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6 }}
             whileHover={{ y: -5 }}
-            className="glass-card-elevated rounded-2xl p-7 group"
+            className="group rounded-xl p-4 glass-card-elevated md:rounded-2xl md:p-7"
           >
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors duration-500">
-              <item.icon className="h-7 w-7 text-primary" />
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors duration-500 group-hover:bg-primary/20 md:mb-5 md:h-14 md:w-14 md:rounded-2xl">
+              <item.icon className="h-5 w-5 text-primary md:h-7 md:w-7" />
             </div>
-            <h3 className="font-display text-2xl mb-4 font-semibold">{item.title}</h3>
+            <h3 className="mb-2 font-display text-xl font-semibold md:mb-4 md:text-2xl">{item.title}</h3>
             {item.content}
           </motion.div>
         ))}
@@ -74,17 +74,17 @@ const ContactSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
-        className="mt-8 glass-card-elevated rounded-2xl p-7"
+        className="mt-3 rounded-xl p-4 glass-card-elevated md:mt-8 md:rounded-2xl md:p-7"
       >
-        <div className="flex items-center gap-3 mb-5">
+        <div className="mb-3 flex items-center gap-3 md:mb-5">
           <MapPin className="h-5 w-5 text-primary" />
-          <h3 className="font-display text-2xl font-semibold">Distritos que atendemos</h3>
+          <h3 className="font-display text-xl font-semibold md:text-2xl">Distritos que atendemos</h3>
         </div>
         <div className="flex flex-wrap gap-2">
           {districts.map((d) => (
-            <span key={d} className="px-4 py-1.5 rounded-xl bg-secondary/80 text-secondary-foreground text-xs font-medium hover:bg-secondary hover:text-foreground transition-colors cursor-default">{d}</span>
+            <span key={d} className="cursor-default rounded-lg bg-secondary/80 px-3 py-1 text-[0.7rem] font-medium text-secondary-foreground transition-colors hover:bg-secondary hover:text-foreground md:rounded-xl md:px-4 md:py-1.5 md:text-xs">{d}</span>
           ))}
-          <span className="px-4 py-1.5 rounded-xl bg-primary/10 text-primary text-xs font-semibold border border-primary/20">+ toda Lima y provincias</span>
+          <span className="rounded-lg border border-primary/20 bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold text-primary md:rounded-xl md:px-4 md:py-1.5 md:text-xs">+ toda Lima y provincias</span>
         </div>
       </motion.div>
     </section>

@@ -22,26 +22,26 @@ const GallerySection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="mb-10 max-w-3xl"
+        className="mb-5 max-w-3xl md:mb-10"
       >
-        <span className="mb-4 block text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+        <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.2em] text-primary md:mb-4 md:text-sm">
           Proyectos reales
         </span>
-        <h2 className="font-display text-4xl font-bold md:text-6xl">
+        <h2 className="font-display text-3xl font-bold md:text-6xl">
           Fabricacion metalica con <span className="text-gradient">presencia profesional</span>
         </h2>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:mt-5 md:text-lg">
           Una seleccion de trabajos para restaurantes, hogares y espacios comerciales. Cada pieza se
           cotiza segun medida, uso, material y acabado.
         </p>
       </motion.div>
 
-      <div className="mb-8 flex flex-wrap gap-2">
+      <div className="mb-5 flex flex-wrap gap-2 md:mb-8">
         {categories.map((item) => (
           <button
             key={item}
             onClick={() => setCategory(item)}
-            className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
+            className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition md:px-4 md:py-2 md:text-sm ${
               category === item
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-secondary/40 text-muted-foreground hover:border-primary/50 hover:text-foreground"
@@ -52,7 +52,7 @@ const GallerySection = () => {
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {projects.map((project) => (
           <article
             key={project.id}
@@ -75,22 +75,22 @@ const GallerySection = () => {
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,hsl(var(--background)/0.88)_100%)]" />
-              <span className="absolute left-4 top-4 rounded-md bg-background/75 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-primary backdrop-blur">
+              <span className="absolute left-3 top-3 rounded-md bg-background/75 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-primary backdrop-blur md:left-4 md:top-4 md:px-3 md:text-xs">
                 {project.category}
               </span>
-              <span className="absolute right-4 top-4 rounded-md bg-background/75 p-2 text-silver opacity-0 backdrop-blur transition group-hover:opacity-100">
+              <span className="absolute right-3 top-3 rounded-md bg-background/75 p-2 text-silver opacity-80 backdrop-blur transition group-hover:opacity-100 md:right-4 md:top-4 md:opacity-0">
                 <Maximize2 className="h-4 w-4" />
               </span>
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <h3 className="font-display text-2xl font-semibold">{project.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-silver">{project.description}</p>
+              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+                <h3 className="font-display text-xl font-semibold md:text-2xl">{project.title}</h3>
+                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-silver md:mt-2 md:text-sm">{project.description}</p>
               </div>
             </button>
           </article>
         ))}
       </div>
 
-      <div className="mt-10 flex justify-center">
+      <div className="mt-6 flex justify-center md:mt-10">
         <a
           href={whatsappUrl(`Hola ${SITE.name}, vi sus proyectos y quiero cotizar un trabajo similar.`)}
           target="_blank"
