@@ -19,10 +19,15 @@ const HeroSection = () => {
   return (
     <section ref={ref} className="relative min-h-screen overflow-hidden bg-background">
       <motion.div className="absolute inset-0" style={{ y }}>
+        <div
+          className="absolute inset-0 bg-cover bg-[position:61%_12%] bg-no-repeat md:hidden"
+          style={{ backgroundImage: `url(${HERO_IMAGE})`, backgroundSize: "auto 100%" }}
+          aria-hidden="true"
+        />
         <img
           src={HERO_IMAGE}
           alt="Barra metalica industrial fabricada por Estructuras Ravichagua"
-          className="h-full w-full scale-105 object-cover object-[63%_18%] sm:object-[58%_18%] md:object-[50%_20%]"
+          className="hidden h-full w-full scale-105 object-cover object-[50%_20%] md:block"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,hsl(var(--background))_0%,hsl(var(--background)/0.86)_36%,hsl(var(--background)/0.42)_70%,hsl(var(--background)/0.72)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,hsl(var(--background))_0%,transparent_42%,hsl(var(--background)/0.55)_100%)]" />

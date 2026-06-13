@@ -46,15 +46,15 @@ const WorkshopSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="mb-8 max-w-3xl"
+        className="mb-6 max-w-3xl md:mb-8"
       >
         <span className="mb-4 block text-sm font-semibold uppercase tracking-[0.2em] text-primary">
           Nuestro taller
         </span>
-        <h2 className="font-display text-4xl font-bold md:text-6xl">
+        <h2 className="font-display text-3xl font-bold md:text-6xl">
           Fabricacion metalica con proceso controlado
         </h2>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground md:mt-5 md:text-lg">
           Mostramos cada etapa clave del trabajo: soldadura, pintura y despacho, con fotos reales
           del taller para que veas como cuidamos la estructura antes de la entrega.
         </p>
@@ -71,22 +71,22 @@ const WorkshopSection = () => {
                 key={stage.id}
                 type="button"
                 onClick={() => setActiveId(stage.id)}
-                className={`flex items-center gap-3 border-b border-border/70 px-5 py-4 text-left transition last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 ${
+                className={`flex items-center gap-3 border-b border-border/70 px-4 py-3 text-left transition last:border-b-0 md:border-b-0 md:border-r md:px-5 md:py-4 md:last:border-r-0 ${
                   isActive
                     ? "bg-secondary text-foreground"
                     : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
                 }`}
               >
-                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
+                <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border md:h-10 md:w-10 ${
                   isActive ? "border-primary/50 bg-primary/10 text-primary" : "border-border/70 bg-background/50"
                 }`}>
                   <Icon className="h-5 w-5" />
                 </span>
                 <span>
-                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-primary/90">
+                  <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-primary/90 md:text-xs">
                     {stage.eyebrow}
                   </span>
-                  <span className="font-display text-xl font-semibold">{stage.title}</span>
+                  <span className="font-display text-lg font-semibold md:text-xl">{stage.title}</span>
                 </span>
               </button>
             );
@@ -98,9 +98,9 @@ const WorkshopSection = () => {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="grid gap-6 p-6 md:p-8 lg:grid-cols-[0.82fr_1.18fr]"
+          className="grid gap-4 p-3 md:gap-6 md:p-8 lg:grid-cols-[0.82fr_1.18fr]"
         >
-          <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-[linear-gradient(145deg,rgba(7,13,20,0.84),rgba(20,28,38,0.68))] p-6">
+          <div className="hidden flex-col justify-between rounded-2xl border border-white/10 bg-[linear-gradient(145deg,rgba(7,13,20,0.84),rgba(20,28,38,0.68))] p-6 md:flex">
             <div>
               <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
                 <ActiveIcon className="h-6 w-6" />
