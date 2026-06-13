@@ -1,6 +1,5 @@
 import StickyNav from "@/components/StickyNav";
 import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
 import WorkshopSection from "@/components/WorkshopSection";
 import GallerySection from "@/components/GallerySection";
 import BeforeAfterSection from "@/components/BeforeAfterSection";
@@ -14,12 +13,11 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground">
       <StickyNav />
       <HeroSection />
-      <ServicesSection />
-      <WorkshopSection />
       <GallerySection />
+      <WorkshopSection />
       <BeforeAfterSection />
       <div id="proceso">
         <HowWeWorkSection />

@@ -5,9 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SITE, whatsappUrl } from "@/lib/site";
 
 const links = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Taller", href: "#taller" },
   { label: "Proyectos", href: "#proyectos" },
+  { label: "Taller", href: "#taller" },
   { label: "Proceso", href: "#proceso" },
   { label: "Cotizar", href: "#cotizar" },
   { label: "Contacto", href: "#contacto" },
@@ -51,7 +50,7 @@ const StickyNav = () => {
           <img
             src="/ravichagua-logo.png"
             alt={`${SITE.legalName} logo`}
-            className="h-10 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] md:h-12"
+            className="h-[42px] w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] md:h-[51px]"
           />
         </a>
 

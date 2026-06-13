@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [
-  { name: "Cliente comercial", district: "Lima", project: "Barra para restaurante", text: "Trabajo firme, buen acabado y medidas claras desde el inicio. La barra quedo lista para uso diario." },
-  { name: "Cliente residencial", district: "Lima", project: "Mesa industrial", text: "La estructura quedo solida y con presencia. Nos ayudaron a aterrizar la idea y el acabado." },
-  { name: "Cliente de negocio", district: "Lima", project: "Entrepiso comercial", text: "La propuesta fue directa y funcional. Ganamos espacio util sin complicar la operacion." },
+  { name: "Cliente corporativo", district: "Lima", project: "Estructura metalica", text: "Trabajo cumplido a tiempo, con buena coordinacion y entrega responsable de la estructura solicitada." },
+  { name: "Norky's", district: "Lima", project: "Estructura comercial", text: "Acabados profesionales, estructura firme y presentacion adecuada para uso comercial y publicitario." },
+  { name: "Colegio Pamer", district: "Lima", project: "Trabajo institucional", text: "Servicio recomendado por la calidad del trabajo, puntualidad y buena atencion durante el proceso." },
+  { name: "Almase Peru E.I.R.L.", district: "Lima", project: "Proyecto metalico", text: "Excelente trabajo. Ha cumplido con lo solicitado." },
 ];
 
 const TestimonialsSection = () => {
@@ -25,7 +26,7 @@ const TestimonialsSection = () => {
         </h2>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 relative">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5 relative">
         {testimonials.map((t, i) => (
           <motion.div
             key={t.name}
